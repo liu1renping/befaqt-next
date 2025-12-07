@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/context/AuthContext";
 
 export default function AddProduct() {
   const [name, setName] = useState("");
@@ -10,14 +10,19 @@ export default function AddProduct() {
   const [price, setPrice] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const router = useRouter();
-  const { status } = useSession();
+  const { user, loading } = useAuth();
 
-  if (status === "loading") {
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/login");
+    }
+  }, [user, loading, router]);
+
+  if (loading) {
     return <p>Loading...</p>;
   }
 
-  if (status === "unauthenticated") {
-    router.push("/login");
+  if (!user) {
     return null;
   }
 

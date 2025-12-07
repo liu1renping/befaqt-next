@@ -1,34 +1,34 @@
 "use client";
 
 import { useState } from "react";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const router = useRouter();
+  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const res = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
       });
 
-      if (res?.error) {
-        setError("Invalid credentials");
-        return;
+      if (res.ok) {
+        const data = await res.json();
+        login(data);
+      } else {
+        const data = await res.json();
+        setError(data.message || "Invalid credentials");
       }
-
-      router.push("/");
-      router.refresh();
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.error(err);
+      setError("An error occurred");
     }
   };
 
@@ -63,4 +63,3 @@ export default function Login() {
     </div>
   );
 }
-
