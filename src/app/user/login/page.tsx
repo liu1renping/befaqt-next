@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { login } = useAuth();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,8 +20,8 @@ export default function Login() {
       });
 
       if (res.ok) {
-        const data = await res.json();
-        login(data);
+        router.refresh(); // Update Server Components (like Navbar)
+        router.push("/");
       } else {
         const data = await res.json();
         setError(data.message || "Invalid credentials");

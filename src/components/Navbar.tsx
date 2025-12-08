@@ -1,10 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
-export default function Navbar() {
-  const { user, logout } = useAuth();
+interface NavbarProps {
+  user: {
+    userId: string;
+    name: string;
+    email: string;
+  } | null;
+}
+
+export default function Navbar({ user }: NavbarProps) {
+  const router = useRouter();
+
+  const logout = async () => {
+    await fetch("/api/user/logout", { method: "POST" });
+    router.refresh();
+  };
 
   return (
     <nav className="bg-gray-800 p-4 text-white">

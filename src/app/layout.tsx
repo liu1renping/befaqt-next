@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Providers } from "./providers";
 import Navbar from "@/components/Navbar";
+import { getSession } from "@/lib/session";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,20 +19,27 @@ export const metadata: Metadata = {
   description: "Next.js MongoDB Auth Product Demo",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getSession();
+  const user = session
+    ? {
+        userId: session.userId,
+        name: session.fname,
+        email: session.email,
+      }
+    : null;
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Providers>
-          <Navbar />
-          <main className="container mx-auto p-4">{children}</main>
-        </Providers>
+        <Navbar user={user} />
+        <main className="container mx-auto p-4">{children}</main>
       </body>
     </html>
   );
