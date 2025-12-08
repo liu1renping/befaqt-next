@@ -14,7 +14,7 @@ export default function AddProduct() {
 
   useEffect(() => {
     if (!loading && !user) {
-      router.push("/login");
+      router.push("/user/login");
     }
   }, [user, loading, router]);
 
@@ -44,7 +44,7 @@ export default function AddProduct() {
       });
 
       if (res.ok) {
-        router.push("/");
+        router.push("/products");
         router.refresh();
       } else {
         console.error("Failed to create product");

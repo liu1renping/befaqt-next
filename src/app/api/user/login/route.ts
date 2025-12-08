@@ -1,9 +1,15 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import { cookies } from "next/headers";
+
 import connectDB from "@/lib/db";
 import User from "@/models/User";
-import { encrypt } from "@/lib/session";
-import { cookies } from "next/headers";
+import { signSession } from "@/lib/session";
+import {
+  JWT_EXPIRATION,
+  JWT_NAME,
+  JWT_SESSION_DURATION,
+} from "@/lib/constants";
 
 export async function POST(req: Request) {
   try {
@@ -19,7 +25,6 @@ export async function POST(req: Request) {
     await connectDB();
 
     const user = await User.findOne({ email });
-
     if (!user) {
       return NextResponse.json(
         { message: "Invalid credentials" },
@@ -28,7 +33,6 @@ export async function POST(req: Request) {
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-
     if (!isMatch) {
       return NextResponse.json(
         { message: "Invalid credentials" },
@@ -36,28 +40,36 @@ export async function POST(req: Request) {
       );
     }
 
-    const expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
-    const session = await encrypt({
-      user: {
-        id: user._id.toString(),
-        name: user.name,
+    // Call signSession with flat user object as per new SessionPayload definition
+    const session = await signSession(
+      {
+        userId: user._id.toString(),
         email: user.email,
+        fname: user.name, // Mapping 'name' to 'fname'
+        role: "USER", // Default role
       },
-      expires,
+      JWT_EXPIRATION
+    );
+
+    // Use JWT_SESSION_DURATION for the cookie expiration date
+    const cookieStore = await cookies();
+    cookieStore.set(JWT_NAME, session, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      expires: new Date(Date.now() + JWT_SESSION_DURATION),
     });
 
-    const cookieStore = await cookies();
-    cookieStore.set("session", session, { expires, httpOnly: true });
-
     return NextResponse.json(
-      { message: "Logged in successfully", user: { id: user._id.toString(), name: user.name, email: user.email } },
+      {
+        message: "Logged in successfully",
+        user: { id: user._id.toString(), name: user.name, email: user.email },
+      },
       { status: 200 }
     );
   } catch (error) {
     console.error("Login error:", error);
-    return NextResponse.json(
-      { message: "An error occurred" },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "An error occurred" }, { status: 500 });
   }
 }

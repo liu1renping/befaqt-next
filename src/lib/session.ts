@@ -1,58 +1,55 @@
 import { SignJWT, jwtVerify, JWTPayload } from "jose";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
+import { JWT_NAME, JWT_SECRET, JWT_SESSION_DURATION } from "./constants";
 
-const secretKey = process.env.NEXTAUTH_SECRET || "supersecretkey123";
-const key = new TextEncoder().encode(secretKey);
+const secret = new TextEncoder().encode(JWT_SECRET);
 
-interface SessionPayload extends JWTPayload {
-  user: {
-    id: string;
-    name: string;
-    email: string;
-  };
-  expires: Date;
-}
+export type SessionPayload = JWTPayload & {
+  userId: string;
+  email: string;
+  fname: string;
+  role: string;
+};
 
-export async function encrypt(payload: SessionPayload) {
+export async function signSession(payload: SessionPayload, expiration = "7d") {
   return await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setExpirationTime("24h")
-    .sign(key);
+    .setExpirationTime(expiration)
+    .sign(secret);
 }
 
-export async function decrypt(input: string): Promise<SessionPayload> {
-  const { payload } = await jwtVerify(input, key, {
-    algorithms: ["HS256"],
-  });
-  return payload as unknown as SessionPayload;
+export async function verifySession(token: string): Promise<SessionPayload> {
+  const { payload } = await jwtVerify(token, secret);
+  return payload as SessionPayload;
 }
 
 export async function getSession() {
   const cookieStore = await cookies();
-  const session = cookieStore.get("session");
+  const session = cookieStore.get(JWT_NAME)?.value ?? null;
   if (!session) return null;
   try {
-    return await decrypt(session.value);
+    return await verifySession(session);
   } catch {
     return null;
   }
 }
 
 export async function updateSession(request: NextRequest) {
-  const session = request.cookies.get("session")?.value;
+  const session = request.cookies.get(JWT_NAME)?.value ?? null;
   if (!session) return;
 
   try {
-    const parsed = await decrypt(session);
-    parsed.expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    const payload = await verifySession(session);
+    // Extend expiration
     const res = NextResponse.next();
-    res.cookies.set({
-      name: "session",
-      value: await encrypt(parsed),
+    res.cookies.set(JWT_NAME, await signSession(payload), {
       httpOnly: true,
-      expires: parsed.expires,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      expires: new Date(Date.now() + JWT_SESSION_DURATION),
     });
     return res;
   } catch {

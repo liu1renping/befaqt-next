@@ -16,25 +16,25 @@ export default function Navbar() {
           <Link href="/" className="hover:text-gray-300">
             Home
           </Link>
+          <Link href="/products" className="hover:text-gray-300">
+            Products
+          </Link>
           {user ? (
             <>
               <Link href="/products/add" className="hover:text-gray-300">
                 Add Product
               </Link>
               <span className="text-gray-400">Hi, {user.name}</span>
-              <button
-                onClick={logout}
-                className="hover:text-gray-300"
-              >
+              <button onClick={logout} className="hover:text-gray-300">
                 Logout
               </button>
             </>
           ) : (
             <>
-              <Link href="/login" className="hover:text-gray-300">
+              <Link href="/user/login" className="hover:text-gray-300">
                 Login
               </Link>
-              <Link href="/register" className="hover:text-gray-300">
+              <Link href="/user/register" className="hover:text-gray-300">
                 Register
               </Link>
             </>

@@ -6,6 +6,13 @@ export async function GET() {
   if (!session) {
     return NextResponse.json(null);
   }
-  return NextResponse.json(session.user);
-}
 
+  // Transform session payload to User interface expected by AuthContext
+  const user = {
+    id: session.userId,
+    name: session.fname,
+    email: session.email,
+  };
+
+  return NextResponse.json(user);
+}
