@@ -1,15 +1,15 @@
 // public env vars
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://crabtrace.com";
-export const PROJECT_NAME = process.env.NEXT_PUBLIC_PROJECT_NAME ?? "CrabTrace";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://project.com";
+export const PROJECT_NAME = process.env.NEXT_PUBLIC_PROJECT_NAME ?? "Project";
 export const PROJECT_LONGNAME =
   process.env.NEXT_PUBLIC_PROJECT_LONGNAME ?? "Mud Crab Traceability";
 export const PROJECT_EMAIL =
-  process.env.NEXT_PUBLIC_PROJECT_EMAIL ?? "admin@crabtrace.com";
+  process.env.NEXT_PUBLIC_PROJECT_EMAIL ?? "admin@project.com";
 
 // private env vars
 export const MONGODB_URI =
-  process.env.MONGODB_URI ?? "mongodb://127.0.0.1:27017/crabtrace";
+  process.env.MONGODB_URI ?? "mongodb://127.0.0.1:27017/project";
 export const JWT_SECRET =
   process.env.JWT_SECRET ?? "befaqt_jwt_secret_fprhkHOyYhco";
 export const JWT_NAME = process.env.JWT_NAME ?? "befaqt_jwt";

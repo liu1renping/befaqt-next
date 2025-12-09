@@ -28,7 +28,10 @@ export default function AddProductForm() {
       });
 
       if (res.ok) {
-        router.push("/products");
+        setName("");
+        setDescription("");
+        setPrice("");
+        setImageUrl("");
         router.refresh();
       } else {
         console.error("Failed to create product");
@@ -39,8 +42,7 @@ export default function AddProductForm() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10">
-      <h1 className="text-2xl font-bold mb-5">Add Product</h1>
+    <div className="max-w-md mx-auto">
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="text"
@@ -82,4 +84,3 @@ export default function AddProductForm() {
     </div>
   );
 }
-

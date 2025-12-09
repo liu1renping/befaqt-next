@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface NavbarProps {
   user: {
@@ -13,6 +14,8 @@ interface NavbarProps {
 
 export default function Navbar({ user }: NavbarProps) {
   const router = useRouter();
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const logout = async () => {
     await fetch("/api/user/logout", { method: "POST" });
@@ -25,18 +28,106 @@ export default function Navbar({ user }: NavbarProps) {
         <Link href="/" className="text-xl font-bold">
           BeFAQT Shop
         </Link>
-        <div className="flex gap-4">
+
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden p-2"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            {isMobileMenuOpen ? (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            ) : (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            )}
+          </svg>
+        </button>
+
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex gap-4 items-center">
           <Link href="/" className="hover:text-gray-300">
             Home
           </Link>
+
+          {/* About Dropdown */}
+          <div className="relative group">
+            <button
+              onClick={() => setIsAboutOpen(!isAboutOpen)}
+              onBlur={() => setTimeout(() => setIsAboutOpen(false), 200)}
+              className="hover:text-gray-300 focus:outline-none flex items-center gap-1"
+            >
+              About
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+            {isAboutOpen && (
+              <div className="absolute z-10 mt-2 w-48 bg-white rounded-md shadow-lg py-1 text-gray-800">
+                <Link
+                  href="/about/project"
+                  className="block px-4 py-2 hover:bg-gray-100"
+                >
+                  Project
+                </Link>
+                <Link
+                  href="/about/tech"
+                  className="block px-4 py-2 hover:bg-gray-100"
+                >
+                  Tech
+                </Link>
+                <Link
+                  href="/about/team"
+                  className="block px-4 py-2 hover:bg-gray-100"
+                >
+                  Team
+                </Link>
+              </div>
+            )}
+          </div>
+
           <Link href="/products" className="hover:text-gray-300">
             Products
           </Link>
+
+          <Link href="/products" className="hover:text-gray-300">
+            Fish
+          </Link>
+
+          <Link href="/products" className="hover:text-gray-300">
+            Fillet
+          </Link>
+
+          <Link href="/products" className="hover:text-gray-300">
+            Shellfish
+          </Link>
+
           {user ? (
             <>
-              <Link href="/products/add" className="hover:text-gray-300">
-                Add Product
-              </Link>
               <span className="text-gray-400">Hi, {user.name}</span>
               <button onClick={logout} className="hover:text-gray-300">
                 Logout
@@ -54,6 +145,93 @@ export default function Navbar({ user }: NavbarProps) {
           )}
         </div>
       </div>
+
+      {/* Mobile Navigation */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden mt-4 pb-4 flex flex-col gap-2">
+          <Link href="/" className="hover:text-gray-300 py-2">
+            Home
+          </Link>
+          <div className="py-2 border-t border-gray-700">
+            <p className="text-gray-400 text-sm mb-2">About</p>
+            <Link
+              href="/about/project"
+              className="block pl-4 py-1 hover:text-gray-300"
+            >
+              Project
+            </Link>
+            <Link
+              href="/about/tech"
+              className="block pl-4 py-1 hover:text-gray-300"
+            >
+              Tech
+            </Link>
+            <Link
+              href="/about/team"
+              className="block pl-4 py-1 hover:text-gray-300"
+            >
+              Team
+            </Link>
+          </div>
+          <div className="py-2 border-t border-gray-700">
+            <p className="text-gray-400 text-sm mb-2">Products</p>
+            <Link
+              href="/products"
+              className="block pl-4 py-1 hover:text-gray-300"
+            >
+              All Products
+            </Link>
+            <Link
+              href="/products"
+              className="block pl-4 py-1 hover:text-gray-300"
+            >
+              Fish
+            </Link>
+            <Link
+              href="/products"
+              className="block pl-4 py-1 hover:text-gray-300"
+            >
+              Fillet
+            </Link>
+            <Link
+              href="/products"
+              className="block pl-4 py-1 hover:text-gray-300"
+            >
+              Shellfish
+            </Link>
+          </div>
+          <div className="pt-2 border-t border-gray-700">
+            {user ? (
+              <>
+                <span className="block py-2 text-gray-400">
+                  Hi, {user.name}
+                </span>
+                <button
+                  onClick={logout}
+                  className="block w-full text-left py-2 hover:text-gray-300"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/user/login"
+                  className="block py-2 hover:text-gray-300"
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/user/register"
+                  className="block py-2 hover:text-gray-300"
+                >
+                  Register
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </nav>
   );
 }

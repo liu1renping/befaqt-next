@@ -20,8 +20,8 @@ export default function Login() {
       });
 
       if (res.ok) {
-        router.refresh(); // Update Server Components (like Navbar)
-        router.push("/");
+        // Force a hard refresh to ensure server components update with new cookie
+        window.location.href = "/";
       } else {
         const data = await res.json();
         setError(data.message || "Invalid credentials");
