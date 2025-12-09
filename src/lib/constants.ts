@@ -14,12 +14,11 @@ export const JWT_SECRET =
   process.env.JWT_SECRET ?? "befaqt_jwt_secret_fprhkHOyYhco";
 export const JWT_NAME = process.env.JWT_NAME ?? "befaqt_jwt";
 
-// Duration string for jose (JWT)
-export const JWT_EXPIRATION = "7d";
-// 7 days in milliseconds (for Date calculations)
+// expiration duration for JWT tokens, used signSession
+export const JWT_EXPIRATION = "7d"; // 7 days
+// expiration duration for JWT cookies in milliseconds, used in cookies.set
 export const JWT_SESSION_DURATION = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
 
-// user consts shared in client and server components
 export enum USER_STATUS {
   ACTIVE = "ACTIVE",
   INACTIVE = "INACTIVE",
@@ -37,20 +36,3 @@ export const COOKIE_MAX_AGE = 7 * 24 * 60 * 60; // 7 days in seconds
 export const AVATAR_MAX_BYTES = Number(2 * 1024 * 1024); // 2MB
 export const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB per image
 export const MAX_IMAGES = 6;
-
-// fisher profile consts shared in client and server components
-export enum FAO_CATCH_AREA {
-  FAO_71 = "FAO 71",
-  FAO_81 = "FAO 81",
-}
-
-export enum CATCH_STATE {
-  Queensland = "Queensland",
-  New_South_Wales = "New South Wales",
-  Northern_Territory = "Northern Territory",
-}
-
-export enum CATCH_REGION {
-  East_Coast = "East Coast",
-  Gulf_of_Carpentaria = "Gulf of Carpentaria",
-}

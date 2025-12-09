@@ -1,4 +1,4 @@
-import connectDB from "@/lib/db";
+import connectDB from "@/lib/mongoose";
 import Product from "@/models/Product";
 import Image from "next/image";
 import { getSession } from "@/lib/session";

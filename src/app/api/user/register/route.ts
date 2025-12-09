@@ -1,46 +1,28 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import connectDB from "@/lib/db";
+
+import connectDB from "@/lib/mongoose";
 import User from "@/models/User";
+import { USER_ROLE, USER_STATUS } from "@/lib/constants";
+import { formatMongooseError } from "@/lib/mongooseError";
 
 export async function POST(req: Request) {
   try {
-    const { name, email, password } = await req.json();
-
-    if (!name || !email || !password) {
-      return NextResponse.json(
-        { message: "Missing required fields" },
-        { status: 400 }
-      );
-    }
-
+    const { fname, lname, email, password } = await req.json();
     await connectDB();
-
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return NextResponse.json(
-        { message: "User already exists" },
-        { status: 400 }
-      );
-    }
-
     const hashedPassword = await bcrypt.hash(password, 12);
-
     await User.create({
-      name,
+      fname,
+      lname,
       email,
       password: hashedPassword,
+      role: USER_ROLE.USER,
+      status: USER_STATUS.ACTIVE,
     });
-
-    return NextResponse.json(
-      { message: "User registered successfully" },
-      { status: 201 }
-    );
-  } catch (error) {
-    console.error("Registration error:", error);
-    return NextResponse.json(
-      { message: "An error occurred while registering the user." },
-      { status: 500 }
-    );
+    // schema validation will be handled by mongoose
+    return NextResponse.json({ ok: true }, { status: 201 });
+  } catch (err) {
+    const { status, body } = formatMongooseError(err);
+    return NextResponse.json(body, { status });
   }
 }

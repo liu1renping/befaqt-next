@@ -1,18 +1,16 @@
 "use client";
 
+import { SessionPayload } from "@/lib/session";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-interface NavbarProps {
-  user: {
-    userId: string;
-    name: string;
-    email: string;
-  } | null;
-}
-
-export default function Navbar({ user }: NavbarProps) {
+export default function Navbar({
+  session,
+}: {
+  session: SessionPayload | null;
+}) {
+  const sessionUser = session?.userData ?? null;
   const router = useRouter();
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -126,9 +124,9 @@ export default function Navbar({ user }: NavbarProps) {
             Shellfish
           </Link>
 
-          {user ? (
+          {sessionUser ? (
             <>
-              <span className="text-gray-400">Hi, {user.name}</span>
+              <span className="text-gray-400">Hi, {sessionUser.fname}</span>
               <button onClick={logout} className="hover:text-gray-300">
                 Logout
               </button>
@@ -201,10 +199,10 @@ export default function Navbar({ user }: NavbarProps) {
             </Link>
           </div>
           <div className="pt-2 border-t border-gray-700">
-            {user ? (
+            {sessionUser ? (
               <>
                 <span className="block py-2 text-gray-400">
-                  Hi, {user.name}
+                  Hi, {sessionUser.fname}
                 </span>
                 <button
                   onClick={logout}

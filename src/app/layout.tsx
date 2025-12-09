@@ -24,21 +24,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getSession();
-  const user = session
-    ? {
-        userId: session.userId,
-        name: session.fname,
-        email: session.email,
-      }
-    : null;
-
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar user={user} />
+        <Navbar session={await getSession()} />
         <main className="container mx-auto p-4">{children}</main>
       </body>
     </html>

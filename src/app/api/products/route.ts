@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
+
 import { getSession } from "@/lib/session";
-import connectDB from "@/lib/db";
+import connectDB from "@/lib/mongoose";
 import Product from "@/models/Product";
+import { formatMongooseError } from "@/lib/mongooseError";
 
 export async function GET() {
   try {
@@ -20,35 +22,20 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const session = await getSession();
-
     if (!session) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    const { name, description, price, imageUrl } = await req.json();
-
-    if (!name || !description || !price) {
-      return NextResponse.json(
-        { message: "Missing required fields" },
-        { status: 400 }
-      );
-    }
+    const body = await req.json();
 
     await connectDB();
-
     const product = await Product.create({
-      name,
-      description,
-      price,
-      imageUrl,
+      ...body,
+      createdBy: session.userData._id,
     });
-
     return NextResponse.json(product, { status: 201 });
-  } catch (error) {
-    console.error("Create product error:", error);
-    return NextResponse.json(
-      { message: "Error creating product" },
-      { status: 500 }
-    );
+  } catch (err) {
+    const { status, body } = formatMongooseError(err);
+    return NextResponse.json(body, { status });
   }
 }
