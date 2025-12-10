@@ -1,5 +1,5 @@
 import { USER_ROLE, USER_STATUS } from "@/lib/constants";
-import { Schema, model, models } from "mongoose";
+import { InferSchemaType, Schema, model, models } from "mongoose";
 
 const UserSchema = new Schema(
   {
@@ -18,7 +18,7 @@ const UserSchema = new Schema(
     email: {
       type: String,
       required: [true, "Email is required"],
-      unique: true,
+      unique: [true, "Email is already in use"],
       lowercase: true,
       trim: true,
     },
@@ -54,6 +54,6 @@ const UserSchema = new Schema(
   { timestamps: true, strict: "throw" }
 );
 
-const User = models.User || model("User", UserSchema);
+export const UserModel = models.User || model("User", UserSchema);
 
-export default User;
+export type UserType = InferSchemaType<typeof UserSchema>;

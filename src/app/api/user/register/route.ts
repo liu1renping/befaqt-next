@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 
 import connectDB from "@/lib/mongoose";
-import User from "@/models/User";
+import { UserModel as User } from "@/models/User";
 import { USER_ROLE, USER_STATUS } from "@/lib/constants";
 import { formatMongooseError } from "@/lib/mongooseError";
 

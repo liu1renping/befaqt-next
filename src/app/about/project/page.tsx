@@ -1,8 +1,8 @@
 export default function ProjectPage() {
   return (
-    <div className="container mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-6">About the Project</h1>
-      <div className="prose max-w-none">
+    <main className="main-page">
+      <h1 className="page-title">About the Project</h1>
+      <section className="section-content">
         <p className="text-lg mb-4">
           BeFAQT integrates Blockchain and multi-sensing technologies, including
           IoT, sensing, E-eye and E-nose, Blockchain data sharing platform and
@@ -13,7 +13,7 @@ export default function ProjectPage() {
           (Content copied from meta description. Please update with full
           details.)
         </p>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }

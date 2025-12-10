@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
-import { MONGODB_URI } from "./constants";
+
+const MONGODB_URI =
+  process.env.MONGODB_URI ?? "mongodb://localhost:27017/project";
 
 declare global {
   var _mongooseConn: {

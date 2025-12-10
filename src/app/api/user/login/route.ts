@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 
 import connectDB from "@/lib/mongoose";
-import User from "@/models/User";
-import { createSession } from "@/lib/session";
+import { UserModel as User } from "@/models/User";
+import { createSession, type SessionPayload } from "@/lib/session";
 
 export async function POST(req: Request) {
   try {
@@ -42,14 +42,21 @@ export async function POST(req: Request) {
     }
 
     // create a session for the user
-    await createSession({
+    const sessionPayload: SessionPayload = {
       userData: {
         _id: user._id.toString(),
         email: user.email,
         fname: user.fname,
         role: user.role,
       },
-    });
+    };
+    const sessionCreated = await createSession(sessionPayload);
+    if (!sessionCreated) {
+      return NextResponse.json(
+        { message: "Session creation failed" },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({ ok: true }, { status: 200 });
   } catch (err) {

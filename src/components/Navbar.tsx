@@ -2,21 +2,28 @@
 
 import { SessionPayload } from "@/lib/session";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
-export default function Navbar({
-  session,
-}: {
-  session: SessionPayload | null;
-}) {
-  const sessionUser = session?.userData ?? null;
+export default function Navbar() {
+  const [sessionUser, setSessionUser] = useState<
+    SessionPayload["userData"] | null
+  >(null);
   const router = useRouter();
+  const pathname = usePathname();
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // fetch the session user on mount and when the pathname changes (including login/logout)
+  useEffect(() => {
+    fetch("/api/user/me")
+      .then((res) => res.json())
+      .then((data) => setSessionUser(data.user));
+  }, [pathname]);
+
   const logout = async () => {
     await fetch("/api/user/logout", { method: "POST" });
+    router.replace("/user/login");
     router.refresh();
   };
 
