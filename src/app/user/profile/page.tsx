@@ -1,15 +1,20 @@
 "use client";
 
-import { useState, ChangeEvent, useEffect } from "react";
-import { type UserType } from "@/models/User";
+import { useState, ChangeEvent, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+
+import { type UserType } from "@/models/User";
 
 export default function ProfilePage() {
   const router = useRouter();
   const [userProfile, setUserProfile] = useState<Partial<UserType>>({});
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [formError, setFormError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [loading, setLoading] = useState(true);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     async function getProfile() {
@@ -18,18 +23,29 @@ export default function ProfilePage() {
           method: "GET",
           headers: { "Content-Type": "application/json" },
         });
+        if (res.status === 401) {
+          router.replace("/user/login");
+          // Throwing an error to break the flow, handled in catch
+          throw new Error("Unauthorized");
+        }
         if (!res.ok) {
-          throw new Error(res.statusText);
+          const data = await res.json();
+          throw new Error(data.message || "Failed to load profile");
         }
         const data = await res.json();
         if (data && data.user) {
           setUserProfile(data.user);
+          setLoading(false);
         }
       } catch (err) {
+        if (err instanceof Error && err.message === "Unauthorized") {
+          return;
+        }
         console.error(err);
         setFormError(
           err instanceof Error ? err.message : "Failed to load profile"
         );
+        setLoading(false);
       }
     }
     getProfile();
@@ -50,6 +66,43 @@ export default function ProfilePage() {
     }));
   };
 
+  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    setFormError("");
+    setFieldErrors({});
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await fetch("/api/user/avatar", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        setUserProfile((prev) => ({ ...prev, avatar: data.url }));
+        router.refresh(); // Refresh to update session data if needed
+      } else {
+        setFormError(data.message || "Failed to upload avatar");
+        setFieldErrors({ avatar: data.message || "Failed to upload avatar" });
+      }
+    } catch (err) {
+      console.error(err);
+      setFormError(
+        err instanceof Error ? err.message : "Failed to upload avatar"
+      );
+    } finally {
+      setUploading(false);
+      // Reset input so same file can be selected again if needed
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
@@ -61,22 +114,33 @@ export default function ProfilePage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(userProfile),
     });
-    const data = await res.json().catch(() => ({}));
+    setSaving(false);
     if (res.ok) {
       router.push("/user/dashboard");
       router.refresh();
     } else {
-      setFormError(data?.message || "Failed to update profile");
-      if (data?.errors && typeof data.errors === "object")
+      const data = await res.json();
+      setFormError(data.message || "Failed to update profile");
+      if (data.errors) {
         setFieldErrors(data.errors);
+      }
     }
-    setSaving(false);
   };
 
   const FieldError = ({ name }: { name?: string }) =>
     fieldErrors[name as string] ? (
       <p className="text-sm text-red-600">{fieldErrors[name as string]}</p>
     ) : null;
+
+  if (loading) {
+    return (
+      <main className="main-page">
+        <div className="flex justify-center items-center h-64">
+          <p className="text-slate-500">Loading profile...</p>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="main-page">
@@ -99,6 +163,43 @@ export default function ProfilePage() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="flex flex-col items-center mb-6 gap-4">
+            {userProfile.avatar ? (
+              <div className="relative w-24 h-24 rounded-full overflow-hidden border border-gray-300">
+                <Image
+                  src={userProfile.avatar}
+                  alt="Avatar"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            ) : (
+              <div className="w-24 h-24 rounded-full bg-sky-500 flex items-center justify-center text-3xl font-bold text-white">
+                {userProfile.fname?.charAt(0)}
+              </div>
+            )}
+            <FieldError name="avatar" />
+
+            <div className="flex flex-col items-center">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="hidden"
+                ref={fileInputRef}
+                id="avatar-upload"
+              />
+              <label
+                htmlFor="avatar-upload"
+                className={`cursor-pointer text-sm text-blue-600 hover:text-blue-500 hover:underline ${
+                  uploading ? "opacity-50 pointer-events-none" : ""
+                }`}
+              >
+                {uploading ? "Uploading..." : "Change Photo"}
+              </label>
+            </div>
+          </div>
+
           <div className="grid md:grid-cols-2 gap-2">
             <div>
               <input

@@ -27,9 +27,12 @@ const UserSchema = new Schema(
       trim: true,
       minlength: [10, "Phone must be at least 10 characters long"],
     },
+    avatar: {
+      type: String,
+      default: "",
+    },
     status: {
       type: String,
-      required: [true, "Status is required"],
       enum: USER_STATUS,
       default: USER_STATUS.ACTIVE,
     },

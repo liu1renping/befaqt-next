@@ -19,6 +19,7 @@ export type SessionPayload = JWTPayload & {
     email: string;
     fname: string;
     role: USER_ROLE;
+    avatar?: string;
   };
 };
 

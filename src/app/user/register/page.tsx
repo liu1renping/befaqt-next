@@ -57,7 +57,6 @@ export default function Register() {
       setFormError(data?.message || "Failed to register");
       if (data?.errors && typeof data.errors === "object")
         setFieldErrors(data.errors);
-      return;
     }
   };
 

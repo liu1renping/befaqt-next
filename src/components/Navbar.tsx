@@ -2,6 +2,7 @@
 
 import { SessionPayload } from "@/lib/session";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -135,9 +136,23 @@ export default function Navbar() {
             <>
               <Link
                 href="/user/dashboard"
-                className="text-gray-200 hover:text-white"
+                className="flex items-center gap-2 text-gray-200 hover:text-white"
               >
-                Hi, {sessionUser.fname}
+                {sessionUser.avatar ? (
+                  <div className="relative w-8 h-8 rounded-full overflow-hidden border border-gray-300">
+                    <Image
+                      src={sessionUser.avatar}
+                      alt={sessionUser.fname}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-8 h-8 rounded-full bg-sky-500 flex items-center justify-center text-sm font-semibold">
+                    {sessionUser.fname.charAt(0)}
+                  </div>
+                )}
+                <span>Hi, {sessionUser.fname}</span>
               </Link>
               <button onClick={logout} className="hover:text-gray-300">
                 Logout
@@ -214,7 +229,7 @@ export default function Navbar() {
             {sessionUser ? (
               <>
                 <Link
-                  href="/user/profile"
+                  href="/user/dashboard"
                   className="block py-2 text-gray-200 hover:text-white"
                 >
                   Hi, {sessionUser.fname}

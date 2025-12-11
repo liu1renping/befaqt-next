@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { getSession } from "@/lib/session";
 import connectDB from "@/lib/mongoose";
 import { UserModel as User, type UserType } from "@/models/User";
@@ -24,14 +25,30 @@ export default async function DashboardPage() {
   return (
     <main className="main-page">
       <h1 className="page-title">Dashboard</h1>
-      <section className="section-content max-w-2xl w-full">
-        <header className="mb-6 border-b pb-4">
-          <h2 className="text-2xl font-semibold mb-2 text-slate-800 dark:text-white">
-            Welcome, {user.fname}!
-          </h2>
-          <p className="text-slate-600 dark:text-slate-300">
-            Manage your account and settings.
-          </p>
+      <section className="section-content max-w-2xl w-full mx-auto">
+        <header className="mb-6 border-b pb-4 flex items-center gap-4">
+          {user.avatar ? (
+            <div className="relative w-16 h-16 rounded-full overflow-hidden border border-gray-300">
+              <Image
+                src={user.avatar}
+                alt={user.fname}
+                fill
+                className="object-cover"
+              />
+            </div>
+          ) : (
+            <div className="w-16 h-16 rounded-full bg-sky-500 flex items-center justify-center text-2xl font-bold text-white">
+              {user.fname.charAt(0)}
+            </div>
+          )}
+          <div>
+            <h2 className="text-2xl font-semibold mb-1 text-slate-800 dark:text-white">
+              Welcome, {user.fname}!
+            </h2>
+            <p className="text-slate-600 dark:text-slate-300">
+              Manage your account and settings.
+            </p>
+          </div>
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -77,7 +94,7 @@ export default async function DashboardPage() {
         </div>
 
         <div className="flex justify-start">
-          <Link href="/user/profile" className="button">
+          <Link href="/user/profile" className="button inline-block text-white">
             Edit Profile
           </Link>
         </div>

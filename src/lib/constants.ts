@@ -20,6 +20,6 @@ export enum USER_ROLE {
   ADMIN = "ADMIN",
 }
 
-export const AVATAR_MAX_BYTES = Number(2 * 1024 * 1024); // 2MB
+export const MAX_AVATAR_SIZE = Number(2 * 1024 * 1024); // 2MB
 export const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB per image
 export const MAX_IMAGES = 6;

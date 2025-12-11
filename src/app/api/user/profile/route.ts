@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getSession } from "@/lib/session";
+import { createSession, getSession, SessionPayload } from "@/lib/session";
 import connectDB from "@/lib/mongoose";
 import { UserModel as User } from "@/models/User";
 import { formatMongooseError } from "@/lib/mongooseError";
@@ -52,6 +52,18 @@ export async function PUT(req: Request) {
     if (!updatedUser) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
+
+    // recreate the session with the new user data
+    const sessionPayload: SessionPayload = {
+      userData: {
+        _id: updatedUser._id.toString(),
+        email: updatedUser.email,
+        fname: updatedUser.fname,
+        role: updatedUser.role,
+        avatar: updatedUser.avatar,
+      },
+    };
+    await createSession(sessionPayload);
 
     return NextResponse.json({ user: updatedUser });
   } catch (err) {
