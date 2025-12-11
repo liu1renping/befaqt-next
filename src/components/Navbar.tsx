@@ -28,7 +28,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-gray-800 p-4 text-white">
+    <nav className="bg-sky-700 p-4 text-white">
       <div className="container mx-auto flex justify-between items-center">
         <Link href="/" className="text-xl font-bold">
           BeFAQT Shop
@@ -133,7 +133,12 @@ export default function Navbar() {
 
           {sessionUser ? (
             <>
-              <span className="text-gray-400">Hi, {sessionUser.fname}</span>
+              <Link
+                href="/user/dashboard"
+                className="text-gray-200 hover:text-white"
+              >
+                Hi, {sessionUser.fname}
+              </Link>
               <button onClick={logout} className="hover:text-gray-300">
                 Logout
               </button>
@@ -208,9 +213,12 @@ export default function Navbar() {
           <div className="pt-2 border-t border-gray-700">
             {sessionUser ? (
               <>
-                <span className="block py-2 text-gray-400">
+                <Link
+                  href="/user/profile"
+                  className="block py-2 text-gray-200 hover:text-white"
+                >
                   Hi, {sessionUser.fname}
-                </span>
+                </Link>
                 <button
                   onClick={logout}
                   className="block w-full text-left py-2 hover:text-gray-300"

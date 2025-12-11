@@ -22,11 +22,10 @@ const UserSchema = new Schema(
       lowercase: true,
       trim: true,
     },
-    role: {
+    phone: {
       type: String,
-      required: [true, "Role is required"],
-      enum: USER_ROLE,
-      default: USER_ROLE.USER,
+      trim: true,
+      minlength: [10, "Phone must be at least 10 characters long"],
     },
     status: {
       type: String,
@@ -34,15 +33,17 @@ const UserSchema = new Schema(
       enum: USER_STATUS,
       default: USER_STATUS.ACTIVE,
     },
+    role: {
+      type: String,
+      required: [true, "Role is required"],
+      enum: USER_ROLE,
+      default: USER_ROLE.USER,
+    },
     password: {
       type: String,
       required: [true, "Password is required"],
     },
-    phone: {
-      type: String,
-      trim: true,
-      minlength: [10, "Phone must be at least 10 characters long"],
-    },
+
     address: {
       street: String,
       city: String,

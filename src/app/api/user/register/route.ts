@@ -8,13 +8,11 @@ import { formatMongooseError } from "@/lib/mongooseError";
 
 export async function POST(req: Request) {
   try {
-    const { fname, lname, email, password } = await req.json();
+    const body = await req.json();
     await connectDB();
-    const hashedPassword = await bcrypt.hash(password, 12);
+    const hashedPassword = await bcrypt.hash(body.password, 12);
     await User.create({
-      fname,
-      lname,
-      email,
+      ...body,
       password: hashedPassword,
       role: USER_ROLE.USER,
       status: USER_STATUS.ACTIVE,
@@ -22,6 +20,7 @@ export async function POST(req: Request) {
     // schema validation will be handled by mongoose
     return NextResponse.json({ ok: true }, { status: 201 });
   } catch (err) {
+    console.error("Error registering user:", err);
     const { status, body } = formatMongooseError(err);
     return NextResponse.json(body, { status });
   }

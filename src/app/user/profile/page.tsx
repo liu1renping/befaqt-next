@@ -1,64 +1,76 @@
 "use client";
 
-import { ChangeEvent, useState } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
+import { type UserType } from "@/models/User";
 import { useRouter } from "next/navigation";
 
-import { type UserType } from "@/models/User";
-
-export default function Register() {
+export default function ProfilePage() {
   const router = useRouter();
-  const [user, setUser] = useState<Partial<UserType>>({});
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [userProfile, setUserProfile] = useState<Partial<UserType>>({});
+  const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    async function getProfile() {
+      try {
+        const res = await fetch("/api/user/profile", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+        if (!res.ok) {
+          throw new Error(res.statusText);
+        }
+        const data = await res.json();
+        if (data && data.user) {
+          setUserProfile(data.user);
+        }
+      } catch (err) {
+        console.error(err);
+        setFormError(
+          err instanceof Error ? err.message : "Failed to load profile"
+        );
+      }
+    }
+    getProfile();
+  }, [router]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
-    setFieldErrors({ ...fieldErrors, [e.target.name]: "" });
+    const { name, value } = e.target;
+    setUserProfile((prev) => ({ ...prev, [name]: value }));
+    setFieldErrors((prev) => ({ ...prev, [name]: "" }));
     setFormError("");
   };
 
-  const handleAddressChange = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = event.target;
-    setUser({ ...user, address: { ...user.address, [name]: value } });
+  const handleAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUserProfile((prev) => ({
+      ...prev,
+      address: { ...prev.address, [name]: value },
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSaving(true);
     setFormError("");
     setFieldErrors({});
-    setLoading(true);
 
-    if (user.password !== confirmPassword) {
-      setFieldErrors({
-        ...fieldErrors,
-        confirmPassword: "Passwords do not match",
-      });
-      setLoading(false);
-      return;
-    }
-
-    const res = await fetch("/api/user/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
+    const res = await fetch("/api/user/profile", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userProfile),
     });
-    setLoading(false);
-
+    const data = await res.json().catch(() => ({}));
     if (res.ok) {
-      router.replace("/user/login");
+      router.push("/user/dashboard");
+      router.refresh();
     } else {
-      const data = await res.json().catch(() => ({}));
-      setFormError(data?.message || "Failed to register");
+      setFormError(data?.message || "Failed to update profile");
       if (data?.errors && typeof data.errors === "object")
         setFieldErrors(data.errors);
-      return;
     }
+    setSaving(false);
   };
 
   const FieldError = ({ name }: { name?: string }) =>
@@ -68,16 +80,16 @@ export default function Register() {
 
   return (
     <main className="main-page">
-      <section className="section-form">
+      <section className="section-form max-w-2xl w-full">
         <header>
           <p className="text-sm uppercase tracking-widest text-slate-500 dark:text-slate-400">
-            Account
+            Profile
           </p>
           <h1 className="text-3xl font-semibold text-slate-900 dark:text-white">
-            Register
+            User Profile
           </h1>
           <p className="text-slate-600 dark:text-slate-300">
-            Create an account to manage your products.
+            Update your profile information.
           </p>
         </header>
         {formError && (
@@ -86,13 +98,14 @@ export default function Register() {
           </div>
         )}
 
-        <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid md:grid-cols-2 gap-2">
             <div>
               <input
                 type="text"
                 placeholder="First Name"
                 name="fname"
+                value={userProfile.fname || ""}
                 onChange={handleChange}
                 className="input"
                 required
@@ -105,6 +118,7 @@ export default function Register() {
                 type="text"
                 placeholder="Last Name"
                 name="lname"
+                value={userProfile.lname || ""}
                 onChange={handleChange}
                 className="input"
                 required
@@ -116,9 +130,10 @@ export default function Register() {
                 type="email"
                 placeholder="Email"
                 name="email"
+                value={userProfile.email || ""}
                 onChange={handleChange}
-                className="input"
-                required
+                className="input bg-gray-100 cursor-not-allowed"
+                disabled
               />
               <FieldError name="email" />
             </div>
@@ -128,34 +143,11 @@ export default function Register() {
                 type="text"
                 placeholder="Phone Number"
                 name="phone"
+                value={userProfile.phone || ""}
                 onChange={handleChange}
                 className="input"
               />
               <FieldError name="phone" />
-            </div>
-            <div>
-              <input
-                type="password"
-                placeholder="Password"
-                name="password"
-                minLength={6}
-                onChange={handleChange}
-                className="input"
-                required
-              />
-              <FieldError name="password" />
-            </div>
-
-            <div>
-              <input
-                type="password"
-                placeholder="Confirm Password"
-                name="confirmPassword"
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className="input"
-                required
-              />
-              <FieldError name="confirmPassword" />
             </div>
           </div>
 
@@ -169,51 +161,49 @@ export default function Register() {
                 name="street"
                 placeholder="Street"
                 onChange={handleAddressChange}
+                value={userProfile.address?.street || ""}
               />
               <input
                 className="input"
                 name="city"
                 placeholder="City"
                 onChange={handleAddressChange}
+                value={userProfile.address?.city || ""}
               />
               <input
                 className="input"
                 name="state"
                 placeholder="State"
                 onChange={handleAddressChange}
+                value={userProfile.address?.state || ""}
               />
               <input
                 className="input"
                 name="postalCode"
                 placeholder="Post Code"
                 onChange={handleAddressChange}
+                value={userProfile.address?.postalCode || ""}
               />
               <input
                 className="input"
                 name="country"
                 placeholder="Country"
                 onChange={handleAddressChange}
+                value={userProfile.address?.country || ""}
               />
             </div>
           </fieldset>
 
-          <button type="submit" className="button mt-4" disabled={loading}>
-            {loading ? "Registering..." : "Register"}
-          </button>
+          <div className="flex justify-end pt-4">
+            <button
+              type="submit"
+              className="button w-full md:w-auto"
+              disabled={saving}
+            >
+              {saving ? "Saving..." : "Save Changes"}
+            </button>
+          </div>
         </form>
-
-        <hr className="my-2" />
-
-        <p>Already have an account?</p>
-        <div className="flex justify-center">
-          <button
-            type="button"
-            className="w-full bg-sky-600 button"
-            onClick={() => router.push("/user/login")}
-          >
-            Login your account
-          </button>
-        </div>
       </section>
     </main>
   );
