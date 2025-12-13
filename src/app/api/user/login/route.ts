@@ -8,6 +8,18 @@ import { createSession, type SessionPayload } from "@/lib/session";
 export async function POST(req: Request) {
   try {
     const { email, password } = await req.json();
+    if (!email || !password) {
+      return NextResponse.json(
+        {
+          message: "Invalid input",
+          errors: {
+            email: "Email is required",
+            password: "Password is required",
+          },
+        },
+        { status: 400 }
+      );
+    }
 
     await connectDB();
     const user = await User.findOne({ email });

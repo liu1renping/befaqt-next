@@ -170,6 +170,8 @@ export default function ProfilePage() {
                   src={userProfile.avatar}
                   alt="Avatar"
                   fill
+                  sizes="96px" // 96px corresponds to the size of the avatar in the profile page w-24 h-24
+                  priority
                   className="object-cover"
                 />
               </div>
@@ -206,6 +208,7 @@ export default function ProfilePage() {
                 type="text"
                 placeholder="First Name"
                 name="fname"
+                autoComplete="given-name"
                 value={userProfile.fname || ""}
                 onChange={handleChange}
                 className="input"
@@ -219,6 +222,7 @@ export default function ProfilePage() {
                 type="text"
                 placeholder="Last Name"
                 name="lname"
+                autoComplete="family-name"
                 value={userProfile.lname || ""}
                 onChange={handleChange}
                 className="input"
@@ -228,27 +232,28 @@ export default function ProfilePage() {
             </div>
             <div>
               <input
+                type="text"
+                placeholder="Phone Number"
+                name="tel"
+                autoComplete="tel"
+                value={userProfile.tel || ""}
+                onChange={handleChange}
+                className="input"
+              />
+              <FieldError name="tel" />
+            </div>
+            <div>
+              <input
                 type="email"
                 placeholder="Email"
                 name="email"
+                autoComplete="email"
                 value={userProfile.email || ""}
                 onChange={handleChange}
                 className="input bg-gray-100 cursor-not-allowed"
                 disabled
               />
               <FieldError name="email" />
-            </div>
-
-            <div>
-              <input
-                type="text"
-                placeholder="Phone Number"
-                name="phone"
-                value={userProfile.phone || ""}
-                onChange={handleChange}
-                className="input"
-              />
-              <FieldError name="phone" />
             </div>
           </div>
 
@@ -260,6 +265,7 @@ export default function ProfilePage() {
               <input
                 className="md:col-span-2 input"
                 name="street"
+                autoComplete="street-address"
                 placeholder="Street"
                 onChange={handleAddressChange}
                 value={userProfile.address?.street || ""}
@@ -267,6 +273,7 @@ export default function ProfilePage() {
               <input
                 className="input"
                 name="city"
+                autoComplete="address-level2"
                 placeholder="City"
                 onChange={handleAddressChange}
                 value={userProfile.address?.city || ""}
@@ -274,6 +281,7 @@ export default function ProfilePage() {
               <input
                 className="input"
                 name="state"
+                autoComplete="address-level1"
                 placeholder="State"
                 onChange={handleAddressChange}
                 value={userProfile.address?.state || ""}
@@ -281,6 +289,7 @@ export default function ProfilePage() {
               <input
                 className="input"
                 name="postalCode"
+                autoComplete="postal-code"
                 placeholder="Post Code"
                 onChange={handleAddressChange}
                 value={userProfile.address?.postalCode || ""}
@@ -288,6 +297,7 @@ export default function ProfilePage() {
               <input
                 className="input"
                 name="country"
+                autoComplete="country-name"
                 placeholder="Country"
                 onChange={handleAddressChange}
                 value={userProfile.address?.country || ""}
@@ -296,6 +306,13 @@ export default function ProfilePage() {
           </fieldset>
 
           <div className="flex justify-end pt-4">
+            <button
+              type="button"
+              className="button bg-slate-200 text-slate-700 hover:bg-slate-300 w-full md:w-auto mr-2"
+              onClick={() => router.push("/user/dashboard")}
+            >
+              Cancel
+            </button>
             <button
               type="submit"
               className="button w-full md:w-auto"

@@ -7,4 +7,3 @@ export async function GET() {
     user: session?.userData || null,
   });
 }
-

@@ -74,6 +74,7 @@ export default function LoginPage() {
             <input
               type="email"
               name="email"
+              autoComplete="email"
               placeholder="Email"
               onChange={handleChange}
               className="input"
@@ -86,6 +87,7 @@ export default function LoginPage() {
               type="password"
               placeholder="Password"
               name="password"
+              autoComplete="current-password"
               onChange={handleChange}
               className="input"
               required

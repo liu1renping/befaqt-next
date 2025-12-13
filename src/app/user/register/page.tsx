@@ -92,6 +92,7 @@ export default function Register() {
                 type="text"
                 placeholder="First Name"
                 name="fname"
+                autoComplete="given-name"
                 onChange={handleChange}
                 className="input"
                 required
@@ -104,6 +105,7 @@ export default function Register() {
                 type="text"
                 placeholder="Last Name"
                 name="lname"
+                autoComplete="family-name"
                 onChange={handleChange}
                 className="input"
                 required
@@ -112,9 +114,21 @@ export default function Register() {
             </div>
             <div>
               <input
+                type="tel"
+                placeholder="Phone Number"
+                name="tel"
+                autoComplete="tel"
+                onChange={handleChange}
+                className="input"
+              />
+              <FieldError name="tel" />
+            </div>
+            <div>
+              <input
                 type="email"
                 placeholder="Email"
                 name="email"
+                autoComplete="email"
                 onChange={handleChange}
                 className="input"
                 required
@@ -124,19 +138,10 @@ export default function Register() {
 
             <div>
               <input
-                type="text"
-                placeholder="Phone Number"
-                name="phone"
-                onChange={handleChange}
-                className="input"
-              />
-              <FieldError name="phone" />
-            </div>
-            <div>
-              <input
                 type="password"
                 placeholder="Password"
                 name="password"
+                autoComplete="new-password"
                 minLength={6}
                 onChange={handleChange}
                 className="input"
@@ -144,12 +149,12 @@ export default function Register() {
               />
               <FieldError name="password" />
             </div>
-
             <div>
               <input
                 type="password"
                 placeholder="Confirm Password"
                 name="confirmPassword"
+                autoComplete="new-password"
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className="input"
                 required
@@ -166,30 +171,35 @@ export default function Register() {
               <input
                 className="md:col-span-2 input"
                 name="street"
+                autoComplete="address-line1"
                 placeholder="Street"
                 onChange={handleAddressChange}
               />
               <input
                 className="input"
                 name="city"
+                autoComplete="address-level2"
                 placeholder="City"
                 onChange={handleAddressChange}
               />
               <input
                 className="input"
                 name="state"
+                autoComplete="address-level1"
                 placeholder="State"
                 onChange={handleAddressChange}
               />
               <input
                 className="input"
                 name="postalCode"
+                autoComplete="postal-code"
                 placeholder="Post Code"
                 onChange={handleAddressChange}
               />
               <input
                 className="input"
                 name="country"
+                autoComplete="country-name"
                 placeholder="Country"
                 onChange={handleAddressChange}
               />

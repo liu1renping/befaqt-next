@@ -10,6 +10,19 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     await connectDB();
+
+    // check if email is already in use, manually, because mongoose validation treats it as MongoDB duplicate key error, with unreliable and difficult formatting for error handling
+    const user = await User.findOne({ email: body.email });
+    if (user) {
+      return NextResponse.json(
+        {
+          message: "User already exists",
+          errors: { email: "Email already in use" },
+        },
+        { status: 409 }
+      );
+    }
+
     const hashedPassword = await bcrypt.hash(body.password, 12);
     await User.create({
       ...body,

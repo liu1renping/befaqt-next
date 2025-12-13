@@ -1,5 +1,6 @@
-import { USER_ROLE, USER_STATUS } from "@/lib/constants";
 import { InferSchemaType, Schema, model, models } from "mongoose";
+
+import { USER_ROLE, USER_STATUS } from "@/lib/constants";
 
 const UserSchema = new Schema(
   {
@@ -22,7 +23,7 @@ const UserSchema = new Schema(
       lowercase: true,
       trim: true,
     },
-    phone: {
+    tel: {
       type: String,
       trim: true,
       minlength: [10, "Phone must be at least 10 characters long"],
@@ -55,7 +56,7 @@ const UserSchema = new Schema(
       country: String,
     },
   },
-  { timestamps: true, strict: "throw" }
+  { timestamps: true, strict: "throw" } // strict: "throw" will throw an error if a field is not in the schema
 );
 
 export const UserModel = models.User || model("User", UserSchema);

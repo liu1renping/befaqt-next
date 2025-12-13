@@ -144,6 +144,7 @@ export default function Navbar() {
                       src={sessionUser.avatar}
                       alt={sessionUser.fname}
                       fill
+                      sizes="32px" // 32px corresponds to the size of the avatar in the navbar w-8 h-8
                       className="object-cover"
                     />
                   </div>

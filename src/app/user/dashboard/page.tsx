@@ -33,6 +33,7 @@ export default async function DashboardPage() {
                 src={user.avatar}
                 alt={user.fname}
                 fill
+                sizes="64px" // 64px corresponds to the size of the avatar in the dashboard header w-16 h-16
                 className="object-cover"
               />
             </div>
@@ -62,11 +63,11 @@ export default async function DashboardPage() {
                 {user.lname}
               </p>
               <p>
-                <span className="font-medium">Email:</span> {user.email}
+                <span className="font-medium">Phone:</span>{" "}
+                {user.tel || "Not provided"}
               </p>
               <p>
-                <span className="font-medium">Phone:</span>{" "}
-                {user.phone || "Not provided"}
+                <span className="font-medium">Email:</span> {user.email}
               </p>
             </div>
           </div>
