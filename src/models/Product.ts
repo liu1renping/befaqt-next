@@ -1,27 +1,34 @@
-import { Schema, model, models } from 'mongoose';
+import { InferSchemaType, Schema, model, models } from "mongoose";
 
-const ProductSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
+const ProductSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "Name is required"],
+      minlength: [2, "Name must be at least 2 characters long"],
+    },
+    description: {
+      type: String,
+    },
+    price: {
+      type: Number,
+      required: [true, "Price is required"],
+      min: [0, "Price must be greater than 0"],
+    },
+    imageUrl: {
+      type: String,
+    },
+    createdBy: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: [true, "Created by is required"],
+    },
   },
-  description: {
-    type: String,
-    required: true,
-  },
-  price: {
-    type: Number,
-    required: true,
-  },
-  imageUrl: {
-    type: String,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  { timestamps: true, strict: "throw" }
+);
 
-const Product = models.Product || model('Product', ProductSchema);
+export const ProductModel = models.Product || model("Product", ProductSchema);
 
-export default Product;
+export type ProductType = InferSchemaType<typeof ProductSchema> & {
+  _id: string;
+};

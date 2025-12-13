@@ -116,19 +116,19 @@ export default function Navbar() {
             )}
           </div>
 
-          <Link href="/products" className="hover:text-gray-300">
+          <Link href="/product" className="hover:text-gray-300">
             Products
           </Link>
 
-          <Link href="/products" className="hover:text-gray-300">
+          <Link href="/product" className="hover:text-gray-300">
             Fish
           </Link>
 
-          <Link href="/products" className="hover:text-gray-300">
+          <Link href="/product" className="hover:text-gray-300">
             Fillet
           </Link>
 
-          <Link href="/products" className="hover:text-gray-300">
+          <Link href="/product" className="hover:text-gray-300">
             Shellfish
           </Link>
 
@@ -202,25 +202,25 @@ export default function Navbar() {
           <div className="py-2 border-t border-gray-700">
             <p className="text-gray-400 text-sm mb-2">Products</p>
             <Link
-              href="/products"
+              href="/product"
               className="block pl-4 py-1 hover:text-gray-300"
             >
               All Products
             </Link>
             <Link
-              href="/products"
+              href="/product"
               className="block pl-4 py-1 hover:text-gray-300"
             >
               Fish
             </Link>
             <Link
-              href="/products"
+              href="/product"
               className="block pl-4 py-1 hover:text-gray-300"
             >
               Fillet
             </Link>
             <Link
-              href="/products"
+              href="/product"
               className="block pl-4 py-1 hover:text-gray-300"
             >
               Shellfish

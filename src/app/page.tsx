@@ -10,7 +10,7 @@ export default function Home() {
           prices.
         </p>
         <Link
-          href="/products"
+          href="/product"
           className="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition"
         >
           View Products
