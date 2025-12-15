@@ -24,7 +24,7 @@ export default function ProductManager({
 
   async function refreshProducts() {
     try {
-      const res = await fetch("/api/product");
+      const res = await fetch("/api/product/manage");
       if (res.ok) {
         const data = await res.json();
         setProducts(data);
@@ -44,7 +44,7 @@ export default function ProductManager({
     if (!confirm("Are you sure you want to delete this product?")) return;
 
     try {
-      const res = await fetch(`/api/product?id=${id}`, {
+      const res = await fetch(`/api/product/manage?id=${id}`, {
         method: "DELETE",
       });
 

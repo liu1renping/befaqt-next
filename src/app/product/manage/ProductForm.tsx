@@ -45,7 +45,7 @@ export default function ProductForm({
     setFormError("");
     setFieldErrors({});
     try {
-      const url = "/api/product";
+      const url = "/api/product/manage";
       const method = initialData ? "PUT" : "POST";
       const body = {
         ...formData,
@@ -91,7 +91,9 @@ export default function ProductForm({
       <input
         type="text"
         placeholder="Product Name"
+        name="name"
         value={formData.name}
+        autoComplete="off"
         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
         className="input"
         required
@@ -100,6 +102,7 @@ export default function ProductForm({
 
       <textarea
         placeholder="Description"
+        name="description"
         value={formData.description}
         onChange={(e) =>
           setFormData({ ...formData, description: e.target.value })
@@ -111,6 +114,7 @@ export default function ProductForm({
       <input
         type="number"
         placeholder="Price"
+        name="price"
         value={formData.price}
         onChange={(e) => setFormData({ ...formData, price: e.target.value })}
         className="input"
@@ -123,6 +127,7 @@ export default function ProductForm({
       <input
         type="text"
         placeholder="Image URL"
+        name="imageUrl"
         value={formData.imageUrl}
         onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
         className="input"

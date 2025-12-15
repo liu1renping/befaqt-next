@@ -1,10 +1,12 @@
 "use client";
 
-import { SessionPayload } from "@/lib/session";
+import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+
+import { SessionPayload } from "@/lib/session";
+import { USER_ROLE } from "@/lib/constants";
 
 export default function Navbar() {
   const [sessionUser, setSessionUser] = useState<
@@ -132,6 +134,15 @@ export default function Navbar() {
             Shellfish
           </Link>
 
+          {sessionUser?.role === USER_ROLE.ADMIN && (
+            <Link
+              href="/user/manage"
+              className="hover:text-gray-300 font-semibold text-yellow-300"
+            >
+              Manage Users
+            </Link>
+          )}
+
           {sessionUser ? (
             <>
               <Link
@@ -226,6 +237,17 @@ export default function Navbar() {
               Shellfish
             </Link>
           </div>
+          {sessionUser?.role === USER_ROLE.ADMIN && (
+            <div className="py-2 border-t border-gray-700">
+              <p className="text-gray-400 text-sm mb-2">Admin</p>
+              <Link
+                href="/user/manage"
+                className="block pl-4 py-1 hover:text-gray-300 text-yellow-300"
+              >
+                Manage Users
+              </Link>
+            </div>
+          )}
           <div className="pt-2 border-t border-gray-700">
             {sessionUser ? (
               <>

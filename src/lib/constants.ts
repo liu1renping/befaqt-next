@@ -15,8 +15,8 @@ export enum USER_STATUS {
 }
 export enum USER_ROLE {
   USER = "USER",
-  FISHER = "FISHER",
-  OFFICER = "OFFICER",
+  SELLER = "SELLER",
+  BUYER = "BUYER",
   ADMIN = "ADMIN",
 }
 

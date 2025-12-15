@@ -51,6 +51,9 @@ body {
   .button {
     @apply rounded-xl bg-blue-600 px-4 py-2 text-base font-semibold text-white text-center cursor-pointer shadow-lg transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 disabled:opacity-50 disabled:cursor-not-allowed;
   }
+  .button-sm {
+    @apply rounded-lg bg-blue-600 px-2 py-1 text-sm font-semibold text-white text-center cursor-pointer shadow-lg transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
   .label-col {
     @apply flex flex-col gap-1 text-sm font-medium text-slate-700 dark:text-slate-200;
   }

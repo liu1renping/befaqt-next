@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export default async function ProductsPage() {
   await connectDB();
-  const products: ProductType[] = await ProductModel.find({}).sort({
+  const products: ProductType[] = await ProductModel.find().sort({
     name: 1,
   });
 
@@ -15,9 +15,7 @@ export default async function ProductsPage() {
     <main className="main-page">
       <h1 className="page-title">Our Products</h1>
       <section className="section-content">
-        <h2 className="text-xl font-bold mb-4">Add New Product</h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
           {products.length > 0 ? (
             products.map((product) => (
               <div

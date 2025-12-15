@@ -61,4 +61,4 @@ const UserSchema = new Schema(
 
 export const UserModel = models.User || model("User", UserSchema);
 
-export type UserType = InferSchemaType<typeof UserSchema>;
+export type UserType = InferSchemaType<typeof UserSchema> & { _id: string };

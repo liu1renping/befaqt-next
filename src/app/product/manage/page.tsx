@@ -1,21 +1,29 @@
-import connectDB from "@/lib/mongoose";
+import { redirect } from "next/navigation";
 
+import connectDB from "@/lib/mongoose";
 import { ProductModel } from "@/models/Product";
 import { getSession } from "@/lib/session";
 import ProductManager from "./ProductManager";
+import { USER_ROLE } from "@/lib/constants";
 
 // Force dynamic rendering since we are fetching data
 export const dynamic = "force-dynamic";
 
 export default async function ProductManagePage() {
+  const session = await getSession();
+  if (!session || session.userData.role !== USER_ROLE.SELLER) {
+    return redirect("/login");
+  }
+
   await connectDB();
-  const products = await ProductModel.find({}).sort({
-    name: 1,
+  const products = await ProductModel.find({
+    createdBy: session.userData._id,
+  }).sort({
+    updatedAt: 1,
   });
 
   // Serialize to plain JSON to avoid "Only plain objects can be passed to Client Components" warning
   const plainProducts = JSON.parse(JSON.stringify(products));
-  const session = await getSession();
 
   return (
     <main className="main-page">
