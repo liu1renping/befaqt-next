@@ -1,15 +1,14 @@
-import connectDB from "@/lib/mongoose";
-import { ProductModel, ProductType } from "@/models/Product";
 import Link from "next/link";
 
-// Force dynamic rendering since we are fetching data
-// export const dynamic = "force-dynamic";
+import connectDB from "@/lib/mongoose";
+import { ProductModel, ProductType } from "@/models/Product";
 
 export default async function ProductsPage() {
   await connectDB();
-  const products: ProductType[] = await ProductModel.find().sort({
-    name: 1,
-  });
+  // use lean() for performance, cast to ProductType to help TypeScript
+  const products = await ProductModel.find()
+    .lean<ProductType[]>()
+    .sort({ name: 1 });
 
   return (
     <main className="main-page">

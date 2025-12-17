@@ -4,15 +4,11 @@ import Link from "next/link";
 import connectDB from "@/lib/mongoose";
 import { ProductModel, ProductType } from "@/models/Product";
 
-interface ProductDetailPageProps {
-  params: Promise<{
-    id: string;
-  }>;
-}
-
 export default async function ProductDetailPage({
   params,
-}: ProductDetailPageProps) {
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
 
   await connectDB();

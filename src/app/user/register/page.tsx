@@ -19,13 +19,6 @@ export default function Register() {
     setFormError("");
   };
 
-  const handleAddressChange = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = event.target;
-    setUser({ ...user, address: { ...user.address, [name]: value } });
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormError("");
@@ -162,49 +155,6 @@ export default function Register() {
               <FieldError name="confirmPassword" />
             </div>
           </div>
-
-          <fieldset className="rounded-2xl border border-slate-300 p-4 dark:border-slate-800 mt-4">
-            <legend className="px-2 text-xs uppercase tracking-widest text-slate-500">
-              Address
-            </legend>
-            <div className="grid md:grid-cols-2 gap-2">
-              <input
-                className="md:col-span-2 input"
-                name="street"
-                autoComplete="address-line1"
-                placeholder="Street"
-                onChange={handleAddressChange}
-              />
-              <input
-                className="input"
-                name="city"
-                autoComplete="address-level2"
-                placeholder="City"
-                onChange={handleAddressChange}
-              />
-              <input
-                className="input"
-                name="state"
-                autoComplete="address-level1"
-                placeholder="State"
-                onChange={handleAddressChange}
-              />
-              <input
-                className="input"
-                name="postalCode"
-                autoComplete="postal-code"
-                placeholder="Post Code"
-                onChange={handleAddressChange}
-              />
-              <input
-                className="input"
-                name="country"
-                autoComplete="country-name"
-                placeholder="Country"
-                onChange={handleAddressChange}
-              />
-            </div>
-          </fieldset>
 
           <button type="submit" className="button mt-4" disabled={loading}>
             {loading ? "Registering..." : "Register"}

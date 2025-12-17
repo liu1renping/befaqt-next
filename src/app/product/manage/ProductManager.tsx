@@ -7,15 +7,13 @@ import { ProductType } from "@/models/Product";
 import ProductForm from "./ProductForm";
 import { SessionPayload } from "@/lib/session";
 
-interface ProductManagerProps {
-  initialProducts: ProductType[];
-  session: SessionPayload | null;
-}
-
 export default function ProductManager({
   initialProducts,
   session,
-}: ProductManagerProps) {
+}: {
+  initialProducts: ProductType[];
+  session: SessionPayload | null;
+}) {
   const router = useRouter();
   const [products, setProducts] = useState<ProductType[]>(initialProducts);
   const [editingProduct, setEditingProduct] = useState<ProductType | null>(
@@ -27,6 +25,7 @@ export default function ProductManager({
       const res = await fetch("/api/product/manage");
       if (res.ok) {
         const data = await res.json();
+
         setProducts(data);
         router.refresh(); // Sync server state as well
       }
@@ -75,7 +74,7 @@ export default function ProductManager({
       )}
 
       {products.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
           {products.map((product) => (
             <div
               key={product._id}

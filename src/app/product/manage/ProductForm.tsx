@@ -3,12 +3,6 @@
 import { useState, useEffect } from "react";
 import { ProductType } from "@/models/Product";
 
-interface ProductFormProps {
-  initialData?: ProductType | null;
-  onSuccess: () => void;
-  onCancel: () => void;
-}
-
 const emptyFormData = {
   name: "",
   description: "",
@@ -20,7 +14,11 @@ export default function ProductForm({
   initialData,
   onSuccess,
   onCancel,
-}: ProductFormProps) {
+}: {
+  initialData?: ProductType | null;
+  onSuccess: () => void;
+  onCancel: () => void;
+}) {
   const [formData, setFormData] = useState(emptyFormData);
   const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState("");
@@ -45,22 +43,18 @@ export default function ProductForm({
     setFormError("");
     setFieldErrors({});
     try {
-      const url = "/api/product/manage";
-      const method = initialData ? "PUT" : "POST";
       const body = {
         ...formData,
         price: parseFloat(formData.price),
         ...(initialData ? { _id: initialData._id } : {}),
       };
-
-      const res = await fetch(url, {
-        method,
+      const res = await fetch("/api/product/manage", {
+        method: initialData ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
 
       const data = await res.json();
-
       if (res.ok) {
         setFormData(emptyFormData);
         onSuccess();
