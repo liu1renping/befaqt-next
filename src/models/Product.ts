@@ -26,10 +26,16 @@ const ProductSchema = new Schema(
     category: {
       type: Schema.Types.ObjectId,
       ref: "Category",
+      required: [true, "Category is required"],
     },
   },
   { timestamps: true, strict: "throw" }
 );
+
+// Force delete the model from cache in development to ensure schema changes are applied
+if (process.env.NODE_ENV === "development") {
+  delete models.Product;
+}
 
 export const ProductModel = models.Product || model("Product", ProductSchema);
 

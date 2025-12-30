@@ -26,6 +26,7 @@ export default async function ProductManagePage() {
     createdBy: p.createdBy.toString(),
     createdAt: p.createdAt?.toString(),
     updatedAt: p.updatedAt?.toString(),
+    category: p.category?.toString(),
   })) as unknown as ProductType[];
 
   return (

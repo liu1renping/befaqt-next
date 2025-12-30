@@ -168,12 +168,13 @@ export default function Navbar() {
               >
                 Products
               </Link>
+
               {categories.map((cat) => (
                 <Link
                   key={cat._id}
-                  href={`/product?category=${cat._id}`}
+                  href={`/product?category=${encodeURIComponent(cat.name)}`}
                   className={`relative flex items-center h-full px-2 uppercase transition-colors hover:text-white ${
-                    pathname === "/product" && currentCategory === cat._id
+                    pathname === "/product" && currentCategory === cat.name
                       ? "text-white after:absolute after:bottom-0 after:left-0 after:w-full after:h-1 after:bg-sky-300 after:content-['']"
                       : ""
                   }`}
@@ -360,7 +361,7 @@ export default function Navbar() {
                 {categories.map((cat) => (
                   <Link
                     key={cat._id}
-                    href={`/product?category=${cat._id}`}
+                    href={`/product?category=${encodeURIComponent(cat.name)}`}
                     className="px-4 py-2 rounded-lg hover:bg-white/5 transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >

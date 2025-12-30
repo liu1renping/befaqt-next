@@ -9,23 +9,27 @@ export default async function ProductsPage({
 }: {
   searchParams: Promise<{ category?: string }>;
 }) {
-  const { category: categoryId } = await searchParams;
+  const { category: categoryName } = await searchParams;
   await connectDB();
+
+  let categoryId = null;
+  let pageTitle = "Our Products";
+
+  if (categoryName) {
+    const category = (await CategoryModel.findOne({
+      name: categoryName,
+    }).lean()) as CategoryType | null;
+
+    if (category) {
+      categoryId = category._id;
+      pageTitle = `${category.name} Products`;
+    }
+  }
 
   const query = categoryId ? { category: categoryId } : {};
   const products = await ProductModel.find(query)
     .lean<ProductType[]>()
     .sort({ name: 1 });
-
-  let pageTitle = "Our Products";
-  if (categoryId) {
-    const category = (await CategoryModel.findById(
-      categoryId
-    ).lean()) as CategoryType | null;
-    if (category) {
-      pageTitle = `${category.name} Products`;
-    }
-  }
 
   return (
     <main className="main-page">
