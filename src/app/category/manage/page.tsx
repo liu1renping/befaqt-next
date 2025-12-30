@@ -1,39 +1,37 @@
 import { redirect } from "next/navigation";
 
 import connectDB from "@/lib/mongoose";
-import { ProductModel, ProductType } from "@/models/Product";
+import { CategoryModel, CategoryType } from "@/models/Category";
 import { getSession } from "@/lib/session";
-import ProductManager from "./ProductManager";
+import CategoryManager from "./CategoryManager";
 import { USER_ROLE } from "@/lib/constants";
 
-export default async function ProductManagePage() {
+export default async function CategoryManagePage() {
   const session = await getSession();
-  if (!session || session.userData.role !== USER_ROLE.SELLER) {
+  if (!session || session.userData.role !== USER_ROLE.ADMIN) {
     return redirect("/login");
   }
 
   await connectDB();
-  const productsRaw = await ProductModel.find({
+  const categoriesRaw = await CategoryModel.find({
     createdBy: session.userData._id,
   })
-    .lean<ProductType[]>()
+    .lean<CategoryType[]>()
     .sort({ name: 1 });
 
   // Convert Mongoose documents (even lean) to plain objects for Client Components
-  const products = productsRaw.map((p) => ({
+  const categories = categoriesRaw.map((p) => ({
     ...p,
     _id: p._id.toString(),
     createdBy: p.createdBy.toString(),
     createdAt: p.createdAt?.toString(),
     updatedAt: p.updatedAt?.toString(),
-  })) as unknown as ProductType[];
+  })) as unknown as CategoryType[];
 
   return (
     <main className="main-page">
-      <h1 className="page-title">Manage Products</h1>
-      <section className="section-content">
-        <ProductManager initialProducts={products} session={session} />
-      </section>
+      <h1 className="page-title">Manage Categories</h1>
+      <CategoryManager initialCategories={categories} session={session} />
     </main>
   );
 }

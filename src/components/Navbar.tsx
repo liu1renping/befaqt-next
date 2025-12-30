@@ -225,15 +225,32 @@ export default function Navbar() {
                     >
                       Dashboard
                     </Link>
-                    {sessionUser?.role === USER_ROLE.ADMIN && (
+                    {sessionUser?.role === USER_ROLE.ADMIN ? (
+                      <>
+                        <Link
+                          href="/user/manage"
+                          className="block px-4 py-2 hover:bg-white/20 transition-colors"
+                          onClick={() => setIsUserOpen(false)}
+                        >
+                          Manage Users
+                        </Link>
+                        <Link
+                          href="/category/manage"
+                          className="block px-4 py-2 hover:bg-white/20 transition-colors"
+                          onClick={() => setIsUserOpen(false)}
+                        >
+                          Manage Categories
+                        </Link>
+                      </>
+                    ) : sessionUser?.role === USER_ROLE.SELLER ? (
                       <Link
-                        href="/user/manage"
+                        href="/product/manage"
                         className="block px-4 py-2 hover:bg-white/20 transition-colors"
                         onClick={() => setIsUserOpen(false)}
                       >
-                        Manage Users
+                        Manage Products
                       </Link>
-                    )}
+                    ) : null}
                     <button
                       onClick={logout}
                       className="w-full text-left px-4 py-2 hover:bg-white/20 transition-colors"
