@@ -2,17 +2,34 @@ import Link from "next/link";
 
 import connectDB from "@/lib/mongoose";
 import { ProductModel, ProductType } from "@/models/Product";
+import { CategoryModel, CategoryType } from "@/models/Category";
 
-export default async function ProductsPage() {
+export default async function ProductsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string }>;
+}) {
+  const { category: categoryId } = await searchParams;
   await connectDB();
-  // use lean() for performance, cast to ProductType to help TypeScript
-  const products = await ProductModel.find()
+
+  const query = categoryId ? { category: categoryId } : {};
+  const products = await ProductModel.find(query)
     .lean<ProductType[]>()
     .sort({ name: 1 });
 
+  let pageTitle = "Our Products";
+  if (categoryId) {
+    const category = (await CategoryModel.findById(
+      categoryId
+    ).lean()) as CategoryType | null;
+    if (category) {
+      pageTitle = `${category.name} Products`;
+    }
+  }
+
   return (
     <main className="main-page">
-      <h1 className="page-title">Our Products</h1>
+      <h1 className="page-title">{pageTitle}</h1>
       <section className="section-content">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
           {products.length > 0 ? (

@@ -18,9 +18,18 @@ const CategorySchema = new Schema(
       ref: "User",
       required: [true, "Created by is required"],
     },
+    order: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true, strict: "throw" }
 );
+
+// Force delete the model from cache in development to ensure schema changes are applied
+if (process.env.NODE_ENV === "development") {
+  delete models.Category;
+}
 
 export const CategoryModel =
   models.Category || model("Category", CategorySchema);

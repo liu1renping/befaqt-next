@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -12,17 +12,26 @@ export default function Navbar() {
   const [sessionUser, setSessionUser] = useState<
     SessionPayload["userData"] | null
   >(null);
+  const [categories, setCategories] = useState<{ _id: string; name: string }[]>(
+    []
+  );
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const currentCategory = searchParams.get("category");
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isUserOpen, setIsUserOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // fetch the session user on mount and when the pathname changes (including login/logout)
+  // fetch the session user and categories on mount and when the pathname changes
   useEffect(() => {
     fetch("/api/user/me")
       .then((res) => res.json())
       .then((data) => setSessionUser(data.user));
+
+    fetch("/api/category")
+      .then((res) => res.json())
+      .then((data) => setCategories(data));
   }, [pathname]);
 
   const logout = async () => {
@@ -149,22 +158,27 @@ export default function Navbar() {
             </div>
 
             <div className="flex items-center h-full gap-4">
-              {[
-                { name: "Products", href: "/product" },
-                { name: "Fish", href: "/product?category=fish" },
-                { name: "Fillet", href: "/product?category=fillet" },
-                { name: "Shellfish", href: "/product?category=shellfish" },
-              ].map((item) => (
+              <Link
+                href="/product"
+                className={`relative flex items-center h-full px-2 uppercase transition-colors hover:text-white ${
+                  pathname === "/product" && !currentCategory
+                    ? "text-white after:absolute after:bottom-0 after:left-0 after:w-full after:h-1 after:bg-sky-300 after:content-['']"
+                    : ""
+                }`}
+              >
+                Products
+              </Link>
+              {categories.map((cat) => (
                 <Link
-                  key={item.name}
-                  href={item.href}
+                  key={cat._id}
+                  href={`/product?category=${cat._id}`}
                   className={`relative flex items-center h-full px-2 uppercase transition-colors hover:text-white ${
-                    pathname === item.href
+                    pathname === "/product" && currentCategory === cat._id
                       ? "text-white after:absolute after:bottom-0 after:left-0 after:w-full after:h-1 after:bg-sky-300 after:content-['']"
                       : ""
                   }`}
                 >
-                  {item.name}
+                  {cat.name}
                 </Link>
               ))}
             </div>
@@ -343,18 +357,14 @@ export default function Navbar() {
                 Categories
               </h3>
               <div className="grid grid-cols-1 gap-1">
-                {[
-                  { name: "Fish", href: "/product?category=fish" },
-                  { name: "Fillet", href: "/product?category=fillet" },
-                  { name: "Shellfish", href: "/product?category=shellfish" },
-                ].map((item) => (
+                {categories.map((cat) => (
                   <Link
-                    key={item.name}
-                    href={item.href}
+                    key={cat._id}
+                    href={`/product?category=${cat._id}`}
                     className="px-4 py-2 rounded-lg hover:bg-white/5 transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    {item.name}
+                    {cat.name}
                   </Link>
                 ))}
               </div>

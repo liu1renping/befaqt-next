@@ -23,6 +23,10 @@ const ProductSchema = new Schema(
       ref: "User",
       required: [true, "Created by is required"],
     },
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: "Category",
+    },
   },
   { timestamps: true, strict: "throw" }
 );

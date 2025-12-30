@@ -16,7 +16,7 @@ export async function GET() {
     await connectDB();
     const categories = await CategoryModel.find({
       createdBy: session.userData._id,
-    }).sort({ name: 1 });
+    }).sort({ order: 1, name: 1 });
     return NextResponse.json(categories);
   } catch (error) {
     console.error("Fetch categories error:", error);

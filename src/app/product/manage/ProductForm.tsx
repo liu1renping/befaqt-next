@@ -8,6 +8,7 @@ const emptyFormData = {
   description: "",
   price: "",
   imageUrl: "",
+  category: "",
 };
 
 export default function ProductForm({
@@ -20,9 +21,18 @@ export default function ProductForm({
   onCancel: () => void;
 }) {
   const [formData, setFormData] = useState(emptyFormData);
+  const [availableCategories, setAvailableCategories] = useState<
+    { _id: string; name: string }[]
+  >([]);
   const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    fetch("/api/category")
+      .then((res) => res.json())
+      .then((data) => setAvailableCategories(data));
+  }, []);
 
   useEffect(() => {
     if (initialData) {
@@ -31,6 +41,7 @@ export default function ProductForm({
         description: initialData.description || "",
         price: initialData.price?.toString() || "",
         imageUrl: initialData.imageUrl || "",
+        category: initialData.category?.toString() || "",
       });
     } else {
       setFormData(emptyFormData);
@@ -104,6 +115,21 @@ export default function ProductForm({
         className="input min-h-[100px]"
       />
       <FieldError name="description" />
+
+      <select
+        name="category"
+        value={formData.category}
+        onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+        className="input"
+      >
+        <option value="">Select Category (Optional)</option>
+        {availableCategories.map((cat) => (
+          <option key={cat._id} value={cat._id}>
+            {cat.name}
+          </option>
+        ))}
+      </select>
+      <FieldError name="category" />
 
       <input
         type="number"
