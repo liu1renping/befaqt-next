@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import connectDB from "@/lib/mongoose";
 import { ProductModel, ProductType } from "@/models/Product";
+import ProductGallery from "./ProductGallery";
 
 export default async function ProductDetailPage({
   params,
@@ -33,41 +33,43 @@ export default async function ProductDetailPage({
           </Link>
         </div>
 
-        <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg overflow-hidden">
-          <div className="grid md:grid-cols-2 gap-8 p-6">
-            {/* Product Image */}
-            <div className="relative h-64 md:h-96 w-full rounded-lg overflow-hidden bg-gray-100 dark:bg-slate-700">
-              {product.imageUrl ? (
-                <Image
-                  src={product.imageUrl}
-                  alt={product.name}
-                  fill
-                  className="object-cover"
-                  priority
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-              ) : (
-                <div className="flex items-center justify-center h-full text-gray-400">
-                  No image available
-                </div>
-              )}
+        <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl overflow-hidden border border-white/10">
+          <div className="grid lg:grid-cols-2 gap-0">
+            {/* Product Gallery */}
+            <div className="p-8 bg-slate-50 dark:bg-slate-900/50">
+              <ProductGallery
+                images={product.images || []}
+                productName={product.name}
+              />
             </div>
 
             {/* Product Details */}
-            <div className="flex flex-col justify-center">
-              <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">
-                {product.name}
-              </h1>
+            <div className="p-8 lg:p-12 flex flex-col">
+              <div className="flex-1">
+                <h1 className="text-4xl font-black text-slate-900 dark:text-white mb-2 tracking-tight uppercase">
+                  {product.name}
+                </h1>
 
-              <div className="text-2xl font-bold text-green-600 dark:text-green-400 mb-6">
-                ${product.price.toFixed(2)}
+                <div className="h-1 w-20 bg-sky-500 mb-8 rounded-full" />
+
+                <div className="text-4xl font-bold text-sky-500 mb-10">
+                  ${product.price.toFixed(2)}
+                </div>
+
+                <div className="prose dark:prose-invert max-w-none">
+                  <h3 className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4">
+                    Product Description
+                  </h3>
+                  <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">
+                    {product.description || "No description provided."}
+                  </p>
+                </div>
               </div>
 
-              <div className="prose dark:prose-invert max-w-none mb-8">
-                <h3 className="text-lg font-semibold mb-2">Description</h3>
-                <p className="text-gray-600 dark:text-gray-300 whitespace-pre-wrap">
-                  {product.description || "No description provided."}
-                </p>
+              <div className="mt-12 pt-8 border-t border-slate-100 dark:border-slate-700/50">
+                <button className="w-full bg-sky-500 text-white py-4 rounded-2xl font-bold text-lg hover:bg-sky-400 hover:scale-[1.02] transition-all active:scale-[0.98] shadow-xl shadow-sky-500/20">
+                  Add to Cart
+                </button>
               </div>
             </div>
           </div>

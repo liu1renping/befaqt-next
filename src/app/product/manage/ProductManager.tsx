@@ -80,14 +80,24 @@ export default function ProductManager({
               key={product._id}
               className="border p-4 rounded shadow hover:shadow-lg transition bg-white dark:bg-slate-800 dark:border-slate-700"
             >
-              {product.imageUrl && (
-                <div className="relative w-full h-48 mb-4">
+              {product.images && product.images.length > 0 ? (
+                <div className="relative w-full aspect-square mb-4 overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-100 dark:border-slate-700">
                   <Image
-                    src={product.imageUrl}
+                    src={product.images[0]}
                     alt={product.name}
                     fill
-                    className="object-cover rounded"
+                    className="object-contain"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                   />
+                  {product.images.length > 1 && (
+                    <div className="absolute top-2 right-2 bg-black/50 backdrop-blur-md text-white text-[10px] px-2 py-0.5 rounded-full font-bold">
+                      +{product.images.length - 1}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="w-full aspect-square mb-4 rounded-2xl bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-400 text-xs font-bold uppercase tracking-widest border border-dashed border-slate-300 dark:border-slate-600">
+                  No Image
                 </div>
               )}
 

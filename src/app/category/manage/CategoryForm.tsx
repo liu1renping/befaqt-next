@@ -179,6 +179,7 @@ export default function CategoryForm({
               alt="Preview"
               fill
               className="object-cover"
+              sizes="(max-width: 640px) 100vw, 400px"
             />
             <button
               type="button"

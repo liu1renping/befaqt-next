@@ -17,7 +17,7 @@ export default async function CategoryManagePage() {
     createdBy: session.userData._id,
   })
     .lean<CategoryType[]>()
-    .sort({ name: 1 });
+    .sort({ order: 1, name: 1 });
 
   // Convert Mongoose documents (even lean) to plain objects for Client Components
   const categories = categoriesRaw.map((p) => ({

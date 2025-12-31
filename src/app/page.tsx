@@ -10,6 +10,11 @@ export default async function Home() {
     .sort({ order: 1, name: 1 })
     .lean()) as unknown as CategoryType[];
 
+  // common categories exclude SFM
+  const commonCategories = categories.filter(
+    (cat) => !cat.name.includes("SFM")
+  );
+
   return (
     <main className="main-page">
       <section className="section-content pt-12 pb-20">
@@ -31,7 +36,7 @@ export default async function Home() {
       <section className="section-content pb-24">
         <h2 className="section-title mb-12">Shop by Category</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {categories.map((cat, index) => (
+          {commonCategories.map((cat, index) => (
             <Link
               key={cat._id}
               href={`/product?category=${encodeURIComponent(cat.name)}`}
@@ -45,6 +50,7 @@ export default async function Home() {
                     alt={cat.name}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                 ) : (
                   <div className="absolute inset-0 bg-slate-800 flex items-center justify-center">

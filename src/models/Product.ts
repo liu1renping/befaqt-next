@@ -15,8 +15,13 @@ const ProductSchema = new Schema(
       required: [true, "Price is required"],
       min: [0, "Price must be greater than 0"],
     },
-    imageUrl: {
-      type: String,
+    images: {
+      type: [String],
+      validate: [
+        (val: string[]) => val.length <= 6,
+        "Maximum 6 images allowed",
+      ],
+      default: [],
     },
     createdBy: {
       type: Schema.Types.ObjectId,
