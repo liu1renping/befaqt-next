@@ -79,12 +79,14 @@ export default async function ProductsPage({
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
           {products.length > 0 ? (
             products.map((product) => (
-              <Link
+              <div
                 key={product._id}
-                href={`/product/${product._id}`}
                 className="group relative flex flex-col bg-white dark:bg-slate-800 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:border-sky-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-sky-500/10"
               >
-                <div className="aspect-square relative overflow-hidden bg-slate-100 dark:bg-slate-900">
+                <Link
+                  href={`/product/${product._id}`}
+                  className="aspect-square relative overflow-hidden bg-slate-100 dark:bg-slate-900 block"
+                >
                   {product.images && product.images.length > 0 ? (
                     <Image
                       src={product.images[0]}
@@ -98,8 +100,13 @@ export default async function ProductsPage({
                       No Image
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-linear-to-t from-slate-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
+                  {/* View Detail Overlay */}
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
+                    <span className="text-white text-xs font-bold uppercase tracking-widest border-b-2 border-sky-400 pb-1 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                      View Details
+                    </span>
+                  </div>
+                </Link>
 
                 <div className="p-4 flex flex-col flex-1">
                   <div className="flex justify-between items-start mb-1">
@@ -122,7 +129,7 @@ export default async function ProductsPage({
                     />
                   </div>
                 </div>
-              </Link>
+              </div>
             ))
           ) : (
             <p>No products found.</p>
