@@ -138,145 +138,168 @@ export default function ProductForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+    <form onSubmit={handleSubmit}>
       {formError && <div className="text-red-500 text-sm">{formError}</div>}
 
-      <input
-        type="text"
-        placeholder="Product Name"
-        name="name"
-        value={formData.name}
-        autoComplete="off"
-        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-        className="input"
-        required
-      />
-      <FieldError name="name" />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="flex flex-col gap-2">
+          <label htmlFor="name" className="label-col">
+            Product Name
+            <input
+              type="text"
+              placeholder="Product Name"
+              id="name"
+              name="name"
+              value={formData.name}
+              autoComplete="off"
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
+              className="input"
+              required
+            />
+            <FieldError name="name" />
+          </label>
 
-      <textarea
-        placeholder="Description"
-        name="description"
-        value={formData.description}
-        onChange={(e) =>
-          setFormData({ ...formData, description: e.target.value })
-        }
-        className="input min-h-[100px]"
-      />
-      <FieldError name="description" />
+          <label htmlFor="description" className="label-col">
+            Description
+            <textarea
+              placeholder="Description"
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={(e) =>
+                setFormData({ ...formData, description: e.target.value })
+              }
+              className="input min-h-[100px]"
+            />
+            <FieldError name="description" />
+          </label>
 
-      <select
-        name="category"
-        value={formData.category}
-        onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-        className="input"
-      >
-        <option value="">Select Category (Optional)</option>
-        {availableCategories.map((cat) => (
-          <option key={cat._id} value={cat._id}>
-            {cat.name}
-          </option>
-        ))}
-      </select>
-      <FieldError name="category" />
-
-      <input
-        type="number"
-        placeholder="Price"
-        name="price"
-        value={formData.price}
-        onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-        className="input"
-        required
-        min="0"
-        step="0.01"
-      />
-      <FieldError name="price" />
-
-      <div className="flex flex-col gap-2">
-        <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
-          Product Images (Max 6)
-        </label>
-
-        <div className="grid grid-cols-3 gap-2 mb-2">
-          {formData.images.map((img: string, index: number) => (
-            <div
-              key={index}
-              className="relative aspect-square rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 group"
+          <label htmlFor="category" className="label-col">
+            Category
+            <select
+              name="category"
+              value={formData.category}
+              onChange={(e) =>
+                setFormData({ ...formData, category: e.target.value })
+              }
+              className="input"
             >
-              <Image
-                src={img}
-                alt={`Product ${index + 1}`}
-                fill
-                className="object-contain"
-                sizes="(max-width: 640px) 33vw, (max-width: 1024px) 20vw, 15vw"
-              />
-              <button
-                type="button"
-                onClick={() => removeImage(index)}
-                className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 shadow-lg"
-                title="Remove image"
-              >
-                <svg
-                  className="w-3 h-3"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-          ))}
+              <option value="">Select Category (Optional)</option>
+              {availableCategories.map((cat) => (
+                <option key={cat._id} value={cat._id}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
+            <FieldError name="category" />
+          </label>
 
-          {formData.images.length < 6 && (
-            <button
-              type="button"
-              onClick={() => fileInputRef.current?.click()}
-              disabled={uploading}
-              className="aspect-square flex flex-col items-center justify-center border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-xl hover:border-sky-500/50 hover:bg-sky-500/5 transition-all group disabled:opacity-50"
-            >
-              {uploading ? (
-                <div className="w-6 h-6 border-2 border-sky-500 border-t-transparent rounded-full animate-spin" />
-              ) : (
-                <>
-                  <svg
-                    className="w-6 h-6 text-slate-400 group-hover:text-sky-500 transition-colors"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 4v16m8-8H4"
-                    />
-                  </svg>
-                  <span className="text-[10px] font-medium text-slate-500 group-hover:text-sky-500 mt-1 uppercase">
-                    Upload
-                  </span>
-                </>
-              )}
-            </button>
-          )}
+          <label htmlFor="price" className="label-col">
+            Price
+            <input
+              type="number"
+              placeholder="Price"
+              name="price"
+              value={formData.price}
+              onChange={(e) =>
+                setFormData({ ...formData, price: e.target.value })
+              }
+              className="input"
+              required
+              min="0"
+              step="0.01"
+            />
+            <FieldError name="price" />
+          </label>
         </div>
 
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleFileChange}
-          className="hidden"
-          ref={fileInputRef}
-        />
-        <FieldError name="images" />
+        <div className="flex flex-col gap-2">
+          <label htmlFor="images" className="label-col">
+            Product Images (Max 6)
+            <div className="grid grid-cols-3 gap-2 mb-2">
+              {formData.images.map((img: string, index: number) => (
+                <div
+                  key={index}
+                  className="relative aspect-square rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 group"
+                >
+                  <Image
+                    src={img}
+                    alt={`Product ${index + 1}`}
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 640px) 33vw, (max-width: 1024px) 20vw, 15vw"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeImage(index)}
+                    className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 shadow-lg"
+                    title="Remove image"
+                  >
+                    <svg
+                      className="w-3 h-3"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              ))}
+
+              {formData.images.length < 6 && (
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={uploading}
+                  className="aspect-square flex flex-col items-center justify-center border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-xl hover:border-sky-500/50 hover:bg-sky-500/5 transition-all group disabled:opacity-50"
+                >
+                  {uploading ? (
+                    <div className="w-6 h-6 border-2 border-sky-500 border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <>
+                      <svg
+                        className="w-6 h-6 text-slate-400 group-hover:text-sky-500 transition-colors"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 4v16m8-8H4"
+                        />
+                      </svg>
+                      <span className="text-[10px] font-medium text-slate-500 group-hover:text-sky-500 mt-1 uppercase">
+                        Upload
+                      </span>
+                    </>
+                  )}
+                </button>
+              )}
+            </div>
+          </label>
+
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="hidden"
+            ref={fileInputRef}
+          />
+          <FieldError name="images" />
+        </div>
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex gap-2 md:max-w-[50%] mx-auto md:mt-2">
         <button
           type="submit"
           disabled={loading}

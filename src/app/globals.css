@@ -43,7 +43,7 @@ body {
     @apply flex flex-col w-full max-w-7xl bg-white rounded-2xl p-2 md:p-5 mb-2 md:mb-5 shadow-lg dark:bg-black;
   }
   .section-form {
-    @apply flex flex-col w-full max-w-2xl gap-3 rounded-2xl bg-slate-100 p-2 md:p-5 shadow-lg dark:bg-black;
+    @apply flex flex-col w-full max-w-5xl gap-3 rounded-2xl bg-slate-100 p-2 md:p-5 shadow-lg dark:bg-black;
   }
   .section-title {
     @apply text-xl font-bold text-slate-900 dark:text-white;
@@ -61,7 +61,7 @@ body {
     @apply rounded-lg bg-blue-600 px-2 py-1 text-sm font-semibold text-white text-center cursor-pointer shadow-lg transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 disabled:opacity-50 disabled:cursor-not-allowed;
   }
   .label-col {
-    @apply flex flex-col gap-1 text-sm font-medium text-slate-700 dark:text-slate-200;
+    @apply flex flex-col text-sm font-medium text-slate-700 dark:text-slate-200;
   }
   .label-row {
     @apply flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-200;

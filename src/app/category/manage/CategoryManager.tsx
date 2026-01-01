@@ -61,7 +61,7 @@ export default function CategoryManager({
 
   return (
     <>
-      <section className="section-form mb-4">
+      <section className="section-form max-w-3xl mb-4">
         <h2 className="section-title">
           {editingCategory ? "Edit Category" : "Add New Category"}
         </h2>
@@ -76,11 +76,11 @@ export default function CategoryManager({
         <h2 className="section-title">Categories</h2>
 
         {categories.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1">
             {categories.map((category) => (
               <div
                 key={category._id}
-                className="border p-4 rounded shadow hover:shadow-lg transition bg-white dark:bg-slate-800 dark:border-slate-700"
+                className="border p-1 rounded shadow hover:shadow-lg transition bg-white dark:bg-slate-800 dark:border-slate-700"
               >
                 {category.imageUrl && (
                   <div className="relative w-full h-48 mb-4">

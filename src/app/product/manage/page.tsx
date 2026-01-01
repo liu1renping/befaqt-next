@@ -32,9 +32,7 @@ export default async function ProductManagePage() {
   return (
     <main className="main-page">
       <h1 className="page-title">Manage Products</h1>
-      <section className="section-content">
-        <ProductManager initialProducts={products} session={session} />
-      </section>
+      <ProductManager initialProducts={products} session={session} />
     </main>
   );
 }

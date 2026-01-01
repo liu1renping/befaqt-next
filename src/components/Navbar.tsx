@@ -158,17 +158,6 @@ export default function Navbar() {
             </div>
 
             <div className="flex items-center h-full gap-4">
-              <Link
-                href="/product"
-                className={`relative flex items-center h-full px-2 uppercase transition-colors hover:text-white ${
-                  pathname === "/product" && !currentCategory
-                    ? "text-white after:absolute after:bottom-0 after:left-0 after:w-full after:h-1 after:bg-sky-300 after:content-['']"
-                    : ""
-                }`}
-              >
-                Products
-              </Link>
-
               {categories.map((cat) => (
                 <Link
                   key={cat._id}
@@ -268,7 +257,7 @@ export default function Navbar() {
                     ) : null}
                     <button
                       onClick={logout}
-                      className="w-full text-left px-4 py-2 hover:bg-white/20 transition-colors"
+                      className="w-full text-left px-4 py-2 text-amber-400 bg-amber-400/10 hover:bg-amber-400/20 transition-colors"
                     >
                       <span className="flex items-center gap-2">
                         Logout
@@ -314,22 +303,13 @@ export default function Navbar() {
       {isMobileMenuOpen && (
         <div className="md:hidden border-t border-white/10 bg-sky-950/95 backdrop-blur-xl animate-in slide-in-from-top duration-300">
           <div className="container mx-auto px-4 py-6 space-y-6">
-            <div className="grid grid-cols-2 gap-4">
-              <Link
-                href="/"
-                className="flex items-center justify-center p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors uppercase font-semibold"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Home
-              </Link>
-              <Link
-                href="/product"
-                className="flex items-center justify-center p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors uppercase font-semibold"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Products
-              </Link>
-            </div>
+            <Link
+              href="/"
+              className="flex items-center justify-center p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors uppercase font-semibold"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Home
+            </Link>
 
             <div className="space-y-4">
               <h3 className="text-xs font-semibold text-sky-400 uppercase tracking-wider pl-2">
@@ -371,39 +351,85 @@ export default function Navbar() {
               </div>
             </div>
 
-            {sessionUser?.role === USER_ROLE.ADMIN && (
-              <Link
-                href="/user/manage"
-                className="block p-4 rounded-xl bg-yellow-400/10 text-yellow-300 border border-yellow-400/20 text-center font-semibold"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Manage Users
-              </Link>
-            )}
-
             <div className="pt-6 border-t border-white/10">
               {sessionUser ? (
-                <div className="flex items-center justify-between">
+                <div className="space-y-2">
                   <Link
                     href="/user/dashboard"
-                    className="flex items-center gap-3"
+                    className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    <div className="w-10 h-10 rounded-full bg-sky-500 flex items-center justify-center font-bold border-2 border-white/20">
-                      {sessionUser.fname.charAt(0)}
+                    {sessionUser.avatar ? (
+                      <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-white/20">
+                        <Image
+                          src={sessionUser.avatar}
+                          alt={sessionUser.fname}
+                          fill
+                          sizes="40px"
+                          className="object-cover"
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-10 h-10 rounded-full bg-sky-500 flex items-center justify-center font-bold border-2 border-white/20">
+                        {sessionUser.fname.charAt(0)}
+                      </div>
+                    )}
+                    <div>
+                      <div className="font-medium text-white">
+                        {sessionUser.fname}
+                      </div>
+                      <div className="text-xs text-sky-300">Dashboard</div>
                     </div>
-                    <span className="font-medium text-white">
-                      {sessionUser.fname}
-                    </span>
                   </Link>
+
+                  {sessionUser?.role === USER_ROLE.ADMIN ? (
+                    <>
+                      <Link
+                        href="/user/manage"
+                        className="block px-4 py-2 rounded-lg hover:bg-white/5 transition-colors"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        Manage Users
+                      </Link>
+                      <Link
+                        href="/category/manage"
+                        className="block px-4 py-2 rounded-lg hover:bg-white/5 transition-colors"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        Manage Categories
+                      </Link>
+                    </>
+                  ) : sessionUser?.role === USER_ROLE.SELLER ? (
+                    <Link
+                      href="/product/manage"
+                      className="block px-4 py-2 rounded-lg hover:bg-white/5 transition-colors"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Manage Products
+                    </Link>
+                  ) : null}
+
                   <button
                     onClick={() => {
                       logout();
                       setIsMobileMenuOpen(false);
                     }}
-                    className="px-4 py-2 rounded-lg bg-red-400/10 text-red-400 hover:bg-red-400/20 transition-colors"
+                    className="w-full text-left px-4 py-2 rounded-lg bg-red-400/10 text-red-400 hover:bg-red-400/20 transition-colors flex items-center gap-2"
                   >
                     Logout
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                      />
+                    </svg>
                   </button>
                 </div>
               ) : (

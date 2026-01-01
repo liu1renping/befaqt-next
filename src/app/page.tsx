@@ -17,7 +17,6 @@ export default async function Home() {
         {/* Background Video */}
         <video
           autoPlay
-          // loop
           muted
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
@@ -84,7 +83,7 @@ export default async function Home() {
                         <span className="text-slate-600">No Image</span>
                       </div>
                     )}
-                    <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-950/20 to-transparent opacity-80" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-80" />
                     <div className="absolute bottom-0 left-0 right-0 p-2 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
                       <h3 className="text-2xl font-bold text-white mb-2 uppercase tracking-tight">
                         {cat.name}
