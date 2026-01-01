@@ -4,6 +4,7 @@ import Image from "next/image";
 import connectDB from "@/lib/mongoose";
 import { ProductModel, ProductType } from "@/models/Product";
 import { CategoryModel, CategoryType } from "@/models/Category";
+import QuickAddToCart from "./QuickAddToCart";
 
 export default async function ProductsPage({
   searchParams,
@@ -113,21 +114,12 @@ export default async function ProductsPage({
                     <span className="text-lg font-black text-sky-500">
                       ${product.price ? product.price.toFixed(2) : "0.00"}
                     </span>
-                    <span className="p-2 rounded-xl bg-sky-500/10 text-sky-500 group-hover:bg-sky-500 group-hover:text-white transition-all">
-                      <svg
-                        className="w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={3}
-                          d="M12 4v16m8-8H4"
-                        />
-                      </svg>
-                    </span>
+                    <QuickAddToCart
+                      productId={product._id.toString()}
+                      name={product.name}
+                      price={product.price || 0}
+                      image={product.images?.[0] || "/placeholder.png"}
+                    />
                   </div>
                 </div>
               </Link>

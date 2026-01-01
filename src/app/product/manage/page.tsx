@@ -9,7 +9,7 @@ import { USER_ROLE } from "@/lib/constants";
 export default async function ProductManagePage() {
   const session = await getSession();
   if (!session || session.userData.role !== USER_ROLE.SELLER) {
-    return redirect("/login");
+    return redirect("/user/signin");
   }
 
   await connectDB();

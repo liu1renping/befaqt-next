@@ -60,9 +60,9 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ ok: true }, { status: 200 });
   } catch (err) {
-    console.error("Login error:", err);
+    console.error("SignIn error:", err);
     return NextResponse.json(
-      { message: "Login failed", errors: err },
+      { message: "SignIn failed", errors: err },
       { status: 500 }
     );
   }

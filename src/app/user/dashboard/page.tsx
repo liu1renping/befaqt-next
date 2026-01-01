@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 export default async function DashboardPage() {
   const session = await getSession();
   if (!session?.userData?._id) {
-    redirect("/user/login");
+    redirect("/user/signin");
   }
 
   await connectDB();
@@ -19,7 +19,7 @@ export default async function DashboardPage() {
     .lean<UserType>();
 
   if (!user) {
-    redirect("/user/login");
+    redirect("/user/signin");
   }
 
   return (

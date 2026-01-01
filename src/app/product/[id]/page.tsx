@@ -3,6 +3,7 @@ import Link from "next/link";
 import connectDB from "@/lib/mongoose";
 import { ProductModel, ProductType } from "@/models/Product";
 import ProductGallery from "./ProductGallery";
+import AddToCartButton from "./AddToCartButton";
 
 export default async function ProductDetailPage({
   params,
@@ -67,9 +68,12 @@ export default async function ProductDetailPage({
               </div>
 
               <div className="mt-12 pt-8 border-t border-slate-100 dark:border-slate-700/50">
-                <button className="w-full bg-sky-500 text-white py-4 rounded-2xl font-bold text-lg hover:bg-sky-400 hover:scale-[1.02] transition-all active:scale-[0.98] shadow-xl shadow-sky-500/20">
-                  Add to Cart
-                </button>
+                <AddToCartButton
+                  productId={product._id.toString()}
+                  productName={product.name}
+                  productPrice={product.price}
+                  productImage={product.images?.[0] || "/placeholder.png"}
+                />
               </div>
             </div>
           </div>

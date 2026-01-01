@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { type UserType } from "@/models/User";
 
-export default function LoginPage() {
+export default function SignInPage() {
   const router = useRouter();
   const [user, setUser] = useState<Partial<UserType>>({
     email: "",
@@ -26,7 +26,7 @@ export default function LoginPage() {
     setFormError("");
     setFieldErrors({});
     setLoading(true);
-    const res = await fetch("/api/user/login", {
+    const res = await fetch("/api/user/signin", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user),
@@ -37,7 +37,7 @@ export default function LoginPage() {
       router.refresh();
     } else {
       const data = await res.json().catch(() => ({}));
-      setFormError(data?.message || "Failed to login");
+      setFormError(data?.message || "Failed to signin");
       if (data?.errors && typeof data.errors === "object")
         setFieldErrors(data.errors);
     }
@@ -50,7 +50,7 @@ export default function LoginPage() {
 
   return (
     <main className="main-page">
-      <section className="section-form max-w-md">
+      <section className="section-form max-w-lg mx-auto">
         <header>
           <p className="text-sm uppercase tracking-widest text-slate-500 dark:text-slate-400">
             Account
@@ -96,7 +96,7 @@ export default function LoginPage() {
           </div>
 
           <button type="submit" className="button mt-4" disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
+            {loading ? "Signing in..." : "Sign In"}
           </button>
         </form>
         <hr className="my-2" />
@@ -106,7 +106,7 @@ export default function LoginPage() {
           <button
             type="button"
             className="w-full bg-sky-600 button"
-            onClick={() => router.push("/user/register")}
+            onClick={() => router.push("/user/signup")}
           >
             Create an Account
           </button>

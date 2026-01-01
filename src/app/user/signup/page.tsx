@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { type UserType } from "@/models/User";
 
-export default function Register() {
+export default function SignUpPage() {
   const router = useRouter();
   const [user, setUser] = useState<Partial<UserType>>({});
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -34,7 +34,7 @@ export default function Register() {
       return;
     }
 
-    const res = await fetch("/api/user/register", {
+    const res = await fetch("/api/user/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,10 +44,10 @@ export default function Register() {
     setLoading(false);
 
     if (res.ok) {
-      router.replace("/user/login");
+      router.replace("/user/signin");
     } else {
       const data = await res.json().catch(() => ({}));
-      setFormError(data?.message || "Failed to register");
+      setFormError(data?.message || "Failed to signup");
       if (data?.errors && typeof data.errors === "object")
         setFieldErrors(data.errors);
     }
@@ -60,13 +60,13 @@ export default function Register() {
 
   return (
     <main className="main-page">
-      <section className="section-form">
+      <section className="section-form max-w-2xl mx-auto">
         <header>
           <p className="text-sm uppercase tracking-widest text-slate-500 dark:text-slate-400">
             Account
           </p>
           <h1 className="text-3xl font-semibold text-slate-900 dark:text-white">
-            Register
+            Sign Up
           </h1>
           <p className="text-slate-600 dark:text-slate-300">
             Create an account to manage your products.
@@ -157,7 +157,7 @@ export default function Register() {
           </div>
 
           <button type="submit" className="button mt-4" disabled={loading}>
-            {loading ? "Registering..." : "Register"}
+            {loading ? "Signing Up..." : "Sign Up"}
           </button>
         </form>
 
@@ -168,9 +168,9 @@ export default function Register() {
           <button
             type="button"
             className="w-full bg-sky-600 button"
-            onClick={() => router.push("/user/login")}
+            onClick={() => router.push("/user/signin")}
           >
-            Login your account
+            Sign In your account
           </button>
         </div>
       </section>

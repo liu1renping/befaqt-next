@@ -24,7 +24,7 @@ export default function ProfilePage() {
           headers: { "Content-Type": "application/json" },
         });
         if (res.status === 401) {
-          router.replace("/user/login");
+          router.replace("/user/signin");
           // Throwing an error to break the flow, handled in catch
           throw new Error("Unauthorized");
         }

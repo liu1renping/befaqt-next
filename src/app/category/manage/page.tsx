@@ -9,7 +9,7 @@ import { USER_ROLE } from "@/lib/constants";
 export default async function CategoryManagePage() {
   const session = await getSession();
   if (!session || session.userData.role !== USER_ROLE.ADMIN) {
-    return redirect("/login");
+    return redirect("/user/signin");
   }
 
   await connectDB();

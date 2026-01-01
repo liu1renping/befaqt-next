@@ -33,7 +33,7 @@ export async function POST(req: Request) {
     // schema validation will be handled by mongoose
     return NextResponse.json({ ok: true }, { status: 201 });
   } catch (err) {
-    console.error("Error registering user:", err);
+    console.error("Error signing up user:", err);
     const { status, body } = formatMongooseError(err);
     return NextResponse.json(body, { status });
   }

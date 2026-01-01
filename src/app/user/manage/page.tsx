@@ -144,7 +144,7 @@ export default function UserManagementPage() {
               <th className="px-3 py-2 border-b-2">Email</th>
               <th className="px-3 py-2 border-b-2">Role</th>
               <th className="px-3 py-2 border-b-2">Status</th>
-              <th className="px-3 py-2 border-b-2">Registered</th>
+              <th className="px-3 py-2 border-b-2">Signed Up</th>
               <th className="px-3 py-2 border-b-2">Actions</th>
             </tr>
           </thead>
