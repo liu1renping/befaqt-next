@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
+
 import { createSession, getSession, SessionPayload } from "@/lib/session";
+import { deleteImageFromCloudinary } from "@/lib/cloudinary";
 import connectDB from "@/lib/mongoose";
-import { UserModel as User } from "@/models/User";
+import { UserModel } from "@/models/User";
 import { formatMongooseError } from "@/lib/mongooseError";
 
 export async function GET() {
@@ -12,7 +14,9 @@ export async function GET() {
     }
 
     await connectDB();
-    const user = await User.findById(session.userData._id).select("-password");
+    const user = await UserModel.findById(session.userData._id).select(
+      "-password"
+    );
 
     if (!user) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
@@ -42,8 +46,23 @@ export async function PUT(req: Request) {
     delete body.role;
     delete body.email; // Prevent email change for now to avoid re-verification logic complexity
 
+    delete body.email; // Prevent email change for now to avoid re-verification logic complexity
+
     await connectDB();
-    const updatedUser = await User.findByIdAndUpdate(
+
+    // Check if avatar has changed
+    if (body.avatar) {
+      const existingUser = await UserModel.findById(session.userData._id);
+      if (
+        existingUser &&
+        existingUser.avatar &&
+        existingUser.avatar !== body.avatar
+      ) {
+        await deleteImageFromCloudinary(existingUser.avatar);
+      }
+    }
+
+    const updatedUser = await UserModel.findByIdAndUpdate(
       session.userData._id,
       { $set: body },
       { new: true, runValidators: true }

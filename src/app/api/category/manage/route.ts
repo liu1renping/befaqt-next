@@ -5,6 +5,7 @@ import connectDB from "@/lib/mongoose";
 import { CategoryModel } from "@/models/Category";
 import { formatMongooseError } from "@/lib/mongooseError";
 import { USER_ROLE } from "@/lib/constants";
+import { deleteImageFromCloudinary } from "@/lib/cloudinary";
 
 export async function GET() {
   try {
@@ -82,6 +83,15 @@ export async function PUT(req: Request) {
       }
     );
 
+    // Delete old image if it was replaced
+    if (
+      category.imageUrl &&
+      updateData.imageUrl &&
+      category.imageUrl !== updateData.imageUrl
+    ) {
+      await deleteImageFromCloudinary(category.imageUrl);
+    }
+
     if (!updatedCategory) {
       return NextResponse.json(
         { message: "Category not found" },
@@ -119,6 +129,11 @@ export async function DELETE(req: Request) {
     }
 
     const deletedCategory = await CategoryModel.findByIdAndDelete(id);
+
+    // Delete image if exists
+    if (category?.imageUrl) {
+      await deleteImageFromCloudinary(category.imageUrl);
+    }
 
     if (!deletedCategory) {
       return NextResponse.json(

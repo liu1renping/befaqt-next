@@ -6,7 +6,9 @@ import {
   CldUploadWidget,
   CloudinaryUploadWidgetResults,
 } from "next-cloudinary";
+
 import { ProductType } from "@/models/Product";
+import { CLOUDINARY_UPLOAD_PRESET, MAX_IMAGE_SIZE } from "@/lib/constants";
 
 const emptyFormData = {
   name: "",
@@ -234,15 +236,14 @@ export default function ProductForm({
 
               {formData.images.length < 6 && (
                 <CldUploadWidget
-                  uploadPreset={
-                    process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
-                  }
+                  uploadPreset={CLOUDINARY_UPLOAD_PRESET}
                   onSuccess={handleUploadSuccess}
                   options={{
                     maxFiles: 6 - formData.images.length,
                     resourceType: "image",
                     clientAllowedFormats: ["webp", "png", "jpg", "jpeg"],
                     singleUploadAutoClose: true,
+                    maxFileSize: MAX_IMAGE_SIZE,
                   }}
                 >
                   {({ open }) => (

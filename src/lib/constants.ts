@@ -7,6 +7,14 @@ export const PROJECT_LONGNAME =
 export const PROJECT_EMAIL =
   process.env.NEXT_PUBLIC_PROJECT_EMAIL ?? "admin@project.com";
 
+// cloudinary env vars
+export const CLOUDINARY_CLOUD_NAME =
+  process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ?? "";
+export const CLOUDINARY_UPLOAD_PRESET =
+  process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET ?? "";
+export const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY ?? "";
+export const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET ?? "";
+
 // shared constants
 export enum USER_STATUS {
   ACTIVE = "ACTIVE",

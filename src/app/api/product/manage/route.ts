@@ -5,6 +5,7 @@ import connectDB from "@/lib/mongoose";
 import { ProductModel } from "@/models/Product";
 import { formatMongooseError } from "@/lib/mongooseError";
 import { USER_ROLE } from "@/lib/constants";
+import { deleteImageFromCloudinary } from "@/lib/cloudinary";
 
 export async function GET() {
   try {
@@ -82,6 +83,18 @@ export async function PUT(req: Request) {
       }
     );
 
+    // Delete images that were removed
+    if (product.images && product.images.length > 0) {
+      const newImages = updateData.images || [];
+      const removedImages = product.images.filter(
+        (img: string) => !newImages.includes(img)
+      );
+
+      for (const img of removedImages) {
+        await deleteImageFromCloudinary(img);
+      }
+    }
+
     if (!updatedProduct) {
       return NextResponse.json(
         { message: "Product not found" },
@@ -119,6 +132,13 @@ export async function DELETE(req: Request) {
     }
 
     const deletedProduct = await ProductModel.findByIdAndDelete(id);
+
+    // Delete all images associated with the product
+    if (product?.images && product.images.length > 0) {
+      for (const img of product.images) {
+        await deleteImageFromCloudinary(img);
+      }
+    }
 
     if (!deletedProduct) {
       return NextResponse.json(

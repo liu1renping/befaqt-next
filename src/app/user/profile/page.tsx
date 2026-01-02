@@ -3,12 +3,14 @@
 import { useState, ChangeEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+
 import {
   CldUploadWidget,
   CloudinaryUploadWidgetResults,
 } from "next-cloudinary";
 
 import { type UserType } from "@/models/User";
+import { CLOUDINARY_UPLOAD_PRESET, MAX_AVATAR_SIZE } from "@/lib/constants";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -160,13 +162,14 @@ export default function ProfilePage() {
 
             <div className="flex flex-col items-center">
               <CldUploadWidget
-                uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
+                uploadPreset={CLOUDINARY_UPLOAD_PRESET}
                 onSuccess={handleUploadSuccess}
                 options={{
                   maxFiles: 1,
                   resourceType: "image",
                   clientAllowedFormats: ["webp", "png", "jpg", "jpeg"],
                   singleUploadAutoClose: true,
+                  maxFileSize: MAX_AVATAR_SIZE,
                 }}
               >
                 {({ open }) => (
