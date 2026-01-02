@@ -1,7 +1,11 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
+import {
+  CldUploadWidget,
+  CloudinaryUploadWidgetResults,
+} from "next-cloudinary";
 import { CategoryType } from "@/models/Category";
 
 const emptyFormData = {
@@ -25,9 +29,6 @@ export default function CategoryForm({
   const [formError, setFormError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
-  const [uploading, setUploading] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
   useEffect(() => {
     if (initialData) {
       setFormData({
@@ -41,34 +42,14 @@ export default function CategoryForm({
     }
   }, [initialData]);
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    setUploading(true);
-    setFormError("");
-
-    const uploadFormData = new FormData();
-    uploadFormData.append("file", file);
-
-    try {
-      const res = await fetch("/api/category/upload", {
-        method: "POST",
-        body: uploadFormData,
-      });
-
-      const data = await res.json();
-      if (res.ok) {
-        setFormData((prev) => ({ ...prev, imageUrl: data.url }));
-      } else {
-        setFormError(data.message || "Failed to upload image");
-      }
-    } catch (err) {
-      console.error(err);
-      setFormError("Error uploading image");
-    } finally {
-      setUploading(false);
-      if (fileInputRef.current) fileInputRef.current.value = "";
+  const handleUploadSuccess = (result: CloudinaryUploadWidgetResults) => {
+    if (
+      result.event === "success" &&
+      typeof result.info === "object" &&
+      result.info
+    ) {
+      const url = result.info.secure_url;
+      setFormData((prev) => ({ ...prev, imageUrl: url }));
     }
   };
 
@@ -226,26 +207,22 @@ export default function CategoryForm({
                 className="input text-sm"
               />
             </div>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="hidden"
-              ref={fileInputRef}
-            />
-            <button
-              type="button"
-              onClick={() => fileInputRef.current?.click()}
-              disabled={uploading}
-              className="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-xl border border-slate-200 dark:border-white/10 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors text-sm font-medium disabled:opacity-50 flex items-center gap-2"
+            <CldUploadWidget
+              uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
+              onSuccess={handleUploadSuccess}
+              options={{
+                maxFiles: 1,
+                resourceType: "image",
+                clientAllowedFormats: ["webp", "png", "jpg", "jpeg"],
+                singleUploadAutoClose: true,
+              }}
             >
-              {uploading ? (
-                <>
-                  <div className="w-4 h-4 border-2 border-slate-400 border-t-transparent rounded-full animate-spin" />
-                  Uploading...
-                </>
-              ) : (
-                <>
+              {({ open }) => (
+                <button
+                  type="button"
+                  onClick={() => open()}
+                  className="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-xl border border-slate-200 dark:border-white/10 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors text-sm font-medium flex items-center gap-2"
+                >
                   <svg
                     className="w-4 h-4"
                     fill="none"
@@ -260,9 +237,9 @@ export default function CategoryForm({
                     />
                   </svg>
                   Upload
-                </>
+                </button>
               )}
-            </button>
+            </CldUploadWidget>
           </div>
           <FieldError name="imageUrl" />
         </div>
@@ -271,7 +248,7 @@ export default function CategoryForm({
       <div className="flex gap-2 md:max-w-[50%] mx-auto mt-2">
         <button
           type="submit"
-          disabled={loading || uploading}
+          disabled={loading}
           className="button bg-sky-600 text-white flex-1 disabled:opacity-50 shadow-lg shadow-sky-600/20"
         >
           {loading

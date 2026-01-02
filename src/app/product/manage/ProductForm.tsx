@@ -1,7 +1,11 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
+import {
+  CldUploadWidget,
+  CloudinaryUploadWidgetResults,
+} from "next-cloudinary";
 import { ProductType } from "@/models/Product";
 
 const emptyFormData = {
@@ -28,7 +32,6 @@ export default function ProductForm({
   const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetch("/api/category")
@@ -50,42 +53,17 @@ export default function ProductForm({
     }
   }, [initialData]);
 
-  const [uploading, setUploading] = useState(false);
-
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    if (formData.images.length >= 6) {
-      setFormError("Maximum 6 images allowed");
-      return;
-    }
-
-    setUploading(true);
-    setFormError("");
-    const uploadFormData = new FormData();
-    uploadFormData.append("file", file);
-
-    try {
-      const res = await fetch("/api/product/upload", {
-        method: "POST",
-        body: uploadFormData,
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setFormData((prev) => ({
-          ...prev,
-          images: [...prev.images, data.url],
-        }));
-      } else {
-        setFormError(data.message || "Upload failed");
-      }
-    } catch (err) {
-      setFormError("Error uploading image");
-      console.error(err);
-    } finally {
-      setUploading(false);
-      e.target.value = ""; // Reset input
+  const handleUploadSuccess = (result: CloudinaryUploadWidgetResults) => {
+    if (
+      result.event === "success" &&
+      typeof result.info === "object" &&
+      result.info
+    ) {
+      const url = result.info.secure_url;
+      setFormData((prev) => ({
+        ...prev,
+        images: [...prev.images, url],
+      }));
     }
   };
 
@@ -255,16 +233,24 @@ export default function ProductForm({
               ))}
 
               {formData.images.length < 6 && (
-                <button
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  disabled={uploading}
-                  className="aspect-square flex flex-col items-center justify-center border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-xl hover:border-sky-500/50 hover:bg-sky-500/5 transition-all group disabled:opacity-50"
+                <CldUploadWidget
+                  uploadPreset={
+                    process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
+                  }
+                  onSuccess={handleUploadSuccess}
+                  options={{
+                    maxFiles: 6 - formData.images.length,
+                    resourceType: "image",
+                    clientAllowedFormats: ["webp", "png", "jpg", "jpeg"],
+                    singleUploadAutoClose: true,
+                  }}
                 >
-                  {uploading ? (
-                    <div className="w-6 h-6 border-2 border-sky-500 border-t-transparent rounded-full animate-spin" />
-                  ) : (
-                    <>
+                  {({ open }) => (
+                    <button
+                      type="button"
+                      onClick={() => open()}
+                      className="aspect-square flex flex-col items-center justify-center border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-xl hover:border-sky-500/50 hover:bg-sky-500/5 transition-all group"
+                    >
                       <svg
                         className="w-6 h-6 text-slate-400 group-hover:text-sky-500 transition-colors"
                         fill="none"
@@ -281,20 +267,12 @@ export default function ProductForm({
                       <span className="text-[10px] font-medium text-slate-500 group-hover:text-sky-500 mt-1 uppercase">
                         Upload
                       </span>
-                    </>
+                    </button>
                   )}
-                </button>
+                </CldUploadWidget>
               )}
             </div>
           </label>
-
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            className="hidden"
-            ref={fileInputRef}
-          />
           <FieldError name="images" />
         </div>
       </div>

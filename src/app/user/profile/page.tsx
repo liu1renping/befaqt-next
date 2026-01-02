@@ -1,8 +1,12 @@
 "use client";
 
-import { useState, ChangeEvent, useEffect, useRef } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import {
+  CldUploadWidget,
+  CloudinaryUploadWidgetResults,
+} from "next-cloudinary";
 
 import { type UserType } from "@/models/User";
 
@@ -10,11 +14,9 @@ export default function ProfilePage() {
   const router = useRouter();
   const [userProfile, setUserProfile] = useState<Partial<UserType>>({});
   const [saving, setSaving] = useState(false);
-  const [uploading, setUploading] = useState(false);
   const [formError, setFormError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     async function getProfile() {
@@ -66,40 +68,14 @@ export default function ProfilePage() {
     }));
   };
 
-  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    setUploading(true);
-    setFormError("");
-    setFieldErrors({});
-
-    const formData = new FormData();
-    formData.append("file", file);
-
-    try {
-      const res = await fetch("/api/user/avatar", {
-        method: "POST",
-        body: formData,
-      });
-
-      const data = await res.json();
-      if (res.ok) {
-        setUserProfile((prev) => ({ ...prev, avatar: data.url }));
-        router.refresh(); // Refresh to update session data if needed
-      } else {
-        setFormError(data.message || "Failed to upload avatar");
-        setFieldErrors({ avatar: data.message || "Failed to upload avatar" });
-      }
-    } catch (err) {
-      console.error(err);
-      setFormError(
-        err instanceof Error ? err.message : "Failed to upload avatar"
-      );
-    } finally {
-      setUploading(false);
-      // Reset input so same file can be selected again if needed
-      if (fileInputRef.current) fileInputRef.current.value = "";
+  const handleUploadSuccess = (result: CloudinaryUploadWidgetResults) => {
+    if (
+      result.event === "success" &&
+      typeof result.info === "object" &&
+      result.info
+    ) {
+      const url = result.info.secure_url;
+      setUserProfile((prev) => ({ ...prev, avatar: url }));
     }
   };
 
@@ -183,22 +159,26 @@ export default function ProfilePage() {
             <FieldError name="avatar" />
 
             <div className="flex flex-col items-center">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="hidden"
-                ref={fileInputRef}
-                id="avatar-upload"
-              />
-              <label
-                htmlFor="avatar-upload"
-                className={`cursor-pointer text-sm text-blue-600 hover:text-blue-500 hover:underline ${
-                  uploading ? "opacity-50 pointer-events-none" : ""
-                }`}
+              <CldUploadWidget
+                uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
+                onSuccess={handleUploadSuccess}
+                options={{
+                  maxFiles: 1,
+                  resourceType: "image",
+                  clientAllowedFormats: ["webp", "png", "jpg", "jpeg"],
+                  singleUploadAutoClose: true,
+                }}
               >
-                {uploading ? "Uploading..." : "Change Photo"}
-              </label>
+                {({ open }) => (
+                  <button
+                    type="button"
+                    onClick={() => open()}
+                    className="cursor-pointer text-sm text-blue-600 hover:text-blue-500 hover:underline"
+                  >
+                    Change Photo
+                  </button>
+                )}
+              </CldUploadWidget>
             </div>
           </div>
 
