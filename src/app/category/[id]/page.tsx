@@ -37,9 +37,9 @@ export default async function ProductDetailPage({
           <div className="grid md:grid-cols-2 gap-8 p-6">
             {/* Product Image */}
             <div className="relative h-64 md:h-96 w-full rounded-lg overflow-hidden bg-gray-100 dark:bg-slate-700">
-              {product.imageUrl ? (
+              {product.images && product.images.length > 0 ? (
                 <Image
-                  src={product.imageUrl}
+                  src={product.images[0]}
                   alt={product.name}
                   fill
                   className="object-cover"

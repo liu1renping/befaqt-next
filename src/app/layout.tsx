@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { CartProvider } from "@/contexts/CartContext";
@@ -33,7 +34,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <CartProvider>
-          <Navbar />
+          <Suspense fallback={<div className="h-16 bg-sky-600" />}>
+            <Navbar />
+          </Suspense>
           {children}
         </CartProvider>
       </body>
