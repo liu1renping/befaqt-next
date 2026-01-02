@@ -6,6 +6,8 @@ import { getSession } from "@/lib/session";
 import ProductManager from "./ProductManager";
 import { USER_ROLE } from "@/lib/constants";
 
+export const dynamic = "force-dynamic";
+
 export default async function ProductManagePage() {
   const session = await getSession();
   if (!session || session.userData.role !== USER_ROLE.SELLER) {

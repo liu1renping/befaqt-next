@@ -6,6 +6,8 @@ import { getSession } from "@/lib/session";
 import CategoryManager from "./CategoryManager";
 import { USER_ROLE } from "@/lib/constants";
 
+export const dynamic = "force-dynamic";
+
 export default async function CategoryManagePage() {
   const session = await getSession();
   if (!session || session.userData.role !== USER_ROLE.ADMIN) {
