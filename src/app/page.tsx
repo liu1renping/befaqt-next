@@ -4,6 +4,8 @@ import Image from "next/image";
 import connectDB from "@/lib/mongoose";
 import { CategoryModel, CategoryType } from "@/models/Category";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   await connectDB();
   const categories = (await CategoryModel.find()
@@ -41,6 +43,18 @@ export default async function Home() {
                 className="w-16 h-16 md:w-20 md:h-20"
               />
               BeFAQT
+              <Link
+                href="https://aiia.com.au/iaward/2020-nsw-iawards-winners/"
+                target="_blank"
+              >
+                <Image
+                  src="/images/pic_BeFAQT-iAwards20bg.png"
+                  alt="BeFAQT iAwards"
+                  width={80}
+                  height={80}
+                  className="w-16 h-16 md:w-18 md:h-18 rounded-xl object-cover"
+                />
+              </Link>
             </div>
             <h1 className="text-xl md:text-4xl font-bold text-white animate-in fade-in slide-in-from-bottom-4 duration-1000 drop-shadow-2xl">
               Blockchain enabled Fish provenance <br className="md:hidden" />
