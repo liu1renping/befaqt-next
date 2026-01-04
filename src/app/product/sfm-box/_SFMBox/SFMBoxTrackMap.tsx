@@ -15,11 +15,11 @@ export default function SFMBoxTrackMap({ iotTracking }: props) {
   const [markersCenter, setMarkersCenter] = useState<LocInterface>();
 
   useEffect(() => {
-    let markersArr: MarkerInterface[] = [];
+    const markersArr: MarkerInterface[] = [];
     let latSum = 0;
     let lngSum = 0;
     iotTracking.forEach((item) => {
-      let _marker: MarkerInterface = {
+      const _marker: MarkerInterface = {
         location: {
           lat: item.latitude,
           lng: item.longitude,

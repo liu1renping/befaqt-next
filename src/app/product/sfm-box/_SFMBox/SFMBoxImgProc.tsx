@@ -52,18 +52,13 @@ export default function SFMBoxImgProc({ imageProc }: props) {
                         </ul>
                       </div>
                       <div className="relative w-full aspect-square">
-                        <a
-                          href={imgItem.image}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <Image
-                            src={imgItem.image}
-                            alt={`E-eye image ${index + 1}`}
-                            fill
-                            className="object-contain rounded"
-                          />
-                        </a>
+                        <Image
+                          src={imgItem.image}
+                          alt={`E-eye image ${index + 1}`}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className="object-contain rounded"
+                        />
                       </div>
                     </div>
                   </div>

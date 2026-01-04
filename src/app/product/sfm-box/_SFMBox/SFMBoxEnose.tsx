@@ -45,17 +45,7 @@ export default function SFMBoxEnose({ enose }: props) {
                     <ul className="space-y-1 text-sm">
                       <li>e-nose score: {testItem.noseScore}</li>
                       <li>confidence: {testItem.confidence}</li>
-                      <li>
-                        sensing data:{" "}
-                        <a
-                          href={testItem.sensingData}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-600 hover:underline"
-                        >
-                          data file
-                        </a>
-                      </li>
+                      <li>sensing data: data file</li>
                     </ul>
                   </div>
                 );
