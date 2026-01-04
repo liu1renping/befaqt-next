@@ -4,7 +4,8 @@ import Image from "next/image";
 import connectDB from "@/lib/mongoose";
 import { CategoryModel, CategoryType } from "@/models/Category";
 
-export const dynamic = "force-dynamic";
+// Ensure dynamic rendering for category images (reload images on every request)
+// export const dynamic = "force-dynamic";
 
 export default async function Home() {
   await connectDB();
@@ -35,13 +36,15 @@ export default async function Home() {
         <section className="section">
           <div className="relative z-10 pt-5 pb-5 text-center">
             <div className="flex items-center justify-center gap-4 text-5xl md:text-7xl font-bold text-white animate-in fade-in slide-in-from-bottom-4 duration-1000 drop-shadow-2xl">
-              <Image
-                src="/icons/logo512x512.png"
-                alt="BeFAQT Logo"
-                width={80}
-                height={80}
-                className="w-16 h-16 md:w-20 md:h-20"
-              />
+              <Link href="/" title="BeFAQT Home" aria-label="BeFAQT Home">
+                <Image
+                  src="/icons/logo512x512.png"
+                  alt="BeFAQT Logo"
+                  width={80}
+                  height={80}
+                  className="w-16 h-16 md:w-20 md:h-20"
+                />
+              </Link>
               BeFAQT
               <Link
                 href="https://aiia.com.au/iaward/2020-nsw-iawards-winners/"
@@ -52,6 +55,8 @@ export default async function Home() {
                   alt="BeFAQT iAwards"
                   width={80}
                   height={80}
+                  title="BeFAQT - NSW iAwards 2020 Winner"
+                  aria-label="BeFAQT - NSW iAwards 2020 Winner"
                   className="w-16 h-16 md:w-18 md:h-18 rounded-xl object-cover"
                 />
               </Link>

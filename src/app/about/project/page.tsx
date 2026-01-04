@@ -17,6 +17,7 @@ interface SectionProps {
   imageSrc: string;
   imageAlt: string;
   reverse?: boolean;
+  imageAspectRatio?: string;
 }
 
 const AboutSection = ({
@@ -25,6 +26,7 @@ const AboutSection = ({
   imageSrc,
   imageAlt,
   reverse = false,
+  imageAspectRatio = "aspect-[16/9]",
 }: SectionProps) => (
   <section
     className={`flex flex-col ${
@@ -32,7 +34,9 @@ const AboutSection = ({
     } items-center gap-3 md:gap-5 last:mb-0`}
   >
     <div className="w-full md:w-1/2">
-      <div className="relative aspect-[16/9] rounded-xl overflow-hidden shadow-2xl transition-transform hover:scale-[1.05] duration-500">
+      <div
+        className={`relative ${imageAspectRatio} rounded-xl overflow-hidden shadow-2xl transition-transform hover:scale-[1.05] duration-500`}
+      >
         {imageSrc.endsWith(".mp4") ? (
           <video
             src={imageSrc}
@@ -125,6 +129,7 @@ export default function AboutProjectPage() {
           title="Benefits and Impacts"
           imageSrc="/images/pic_fishrecord.png"
           imageAlt="about project"
+          imageAspectRatio="aspect-[8/9]"
         >
           <p>
             The BeFAQT system enables the online buyers to achieve better than

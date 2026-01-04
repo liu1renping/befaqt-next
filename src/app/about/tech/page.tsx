@@ -76,16 +76,16 @@ export default function AboutTechPage() {
     <main className="main-page">
       {/* Hero Section */}
       <div className="max-w-4xl text-center mb-5">
-        <h1 className="page-title">About {PROJECT_NAME} Technologies</h1>
+        <h1 className="page-title">{PROJECT_NAME} - Technologies</h1>
         <p className="text-lg md:text-xl font-light max-w-2xl mx-auto italic">
           &ldquo;Blockchain enabled Fish provenance And Quality Tracking&rdquo;
         </p>
       </div>
 
       <div className="w-full max-w-7xl mx-auto">
-        {/* Technologies */}
+        {/* Seafood Traceability */}
         <AboutSection
-          title="Technologies"
+          title="Seafood Traceability"
           imageSrc="https://www.youtube.com/embed/hHGJ7YGpBWI?si=3YEa8Nt-HtfhYF7j"
           imageAlt="BeFAQT YouTube"
         >
@@ -111,9 +111,9 @@ export default function AboutTechPage() {
 
         {/* Blockchain enabled Online Trading Platform */}
         <AboutSection
-          title="Blockchain enabled Online Trading Platform"
-          imageSrc="/images/pic_visit_fisherman.png"
-          imageAlt="about project"
+          title="Online Trading Platform"
+          imageSrc="/images/pic_home16x9.jpg"
+          imageAlt="Online Trading Platform"
           reverse
         >
           <p>
@@ -137,41 +137,88 @@ export default function AboutTechPage() {
         {/* Internet of Things (IoT) */}
         <AboutSection
           title="Internet of Things (IoT)"
-          imageSrc="/images/pic_fishrecord.png"
+          imageSrc="/images/pic_sfm-box1.jpg"
           imageAlt="about project"
         >
           <p>
-            The BeFAQT system enables the online buyers to achieve better than
-            onsite inspection experiences, in that they can not only have the
-            see, feel and smell experience, but also have access to
-            comprehensive information in seafood provenance, supply chain
-            tracking, and quality assessment. With BeFAQT system, online buyers
-            can have early access to catch list, including authenticated fish
-            photo, species, and sizes, with trusted origin, visible condition
-            tracking, and objective quality assessment. The developed BeFAQT
-            technologies support Sydney Fish Market online trading platform to
-            achieve simplified process, transparent and trusted supply chain,
-            shorter time to market and wider market access.
+            the UTS team has developed new 5G / NB-IoT devices that are mounted
+            on Sydney Fish Market fish boxes, which are used by fishermen across
+            NSW to store and transport fish produce. The instrumented fish boxes
+            record the locations and temperature conditions onboard the fishing
+            boats at the origin and across the fish supply chain.
           </p>
           <p>
-            BeFAQT provides a provable way for the fishers to demonstrate
-            provenance such as location of catch and proof of cold chain so that
-            better quality product can be rewarded with higher prices. The
-            technologies can potentially reduce paperwork with automated catch
-            recording of species and sizes to the Sydney Fish Market online
-            platform. With BeFAQT system, the catch provenance is shared
-            immediately in the online trading platform, where the buyers can
-            start bidding on a fish, e.g. Kingfish, whilst the fisherman is
-            still at sea.
+            The developed IoT + Blockchain technologies achieve much more than
+            the existing data logger technology in terms of information
+            reliability, trust data sharing, supply chain coverage, and
+            real-time data delivery, which enable prompt actions. Utilising 5G
+            NB-IoT technology, these devices can achieve seamless connectivity
+            for domestic and international supply chain tracking. Smart
+            buffering algorithms are designed to cope with the limited mobile
+            coverage in the ocean and in cool rooms. Energy efficient firmware
+            is implemented to prolong IoT device lifetime, permitting the
+            tracking of the fish boxes from catch origin to Sydney Fish Market.
           </p>
           <p>
-            According to Bryan Skepper, Chair of NSW Seafood Industry Council,
-            “the BeFAQT system has huge potential. Once successfully
-            commercialised, the developed technologies can be extended
-            throughout the fishing industry in Australia, and potentially
-            exported to other countries, benefiting the entire fishing industry.
-            The developed technologies can be extended to other food supply
-            chains, such as meat, fruit and vegetables.”
+            In this way, the temperature and location of every individual Sydney
+            Fish Market box can be obtained in real-time and then secured in
+            Blockchain by Smart Contract.
+          </p>
+        </AboutSection>
+
+        {/* E-eye */}
+        <AboutSection
+          title="E-eye"
+          imageSrc="/images/pic_imgproc.png"
+          imageAlt="about project"
+          reverse
+        >
+          <p>
+            The UTS team has built a robust computer vision platform to
+            automatically and unbiasedly extract essential pixel-based elements
+            known as “image features” of objects in the image/video. Advanced
+            machine learning is then applied to build AI models for fish
+            freshness assessment, size estimation and species recognition.
+          </p>
+          <p>
+            This is the first time multi-sensor (IoT sensors, E-eye, and E-nose)
+            technologies have been combined to address fish freshness assessment
+            in an industrial environment. Novel designs and Artificial
+            Intelligence (AI) methodologies are created in each of the
+            technologies to address practical conditions in the fish supply
+            chains.{" "}
+          </p>
+        </AboutSection>
+
+        {/* E-nose */}
+        <AboutSection
+          title="E-nose"
+          imageSrc="/images/pic_enose.png"
+          imageAlt="about project"
+        >
+          <p>
+            The UTS team has also developed machine olfactory technologies to
+            assess fish freshness. The e-nose system includes an airflow intake
+            system and control logics to carry out the automatic odour analysis.
+            Novel non-parametric kernel based modelling and Hidden Markov Model
+            are developed for data processing and classification.
+          </p>
+        </AboutSection>
+
+        {/* Fisherman App */}
+        <AboutSection
+          title="Fisherman App"
+          imageSrc="/images/pic_fisherapp.png"
+          imageAlt="about project"
+          reverse
+        >
+          <p>
+            The Blockchain-secured Fisherman App records and certifies fish
+            catch time, location, photo, and the company. The fish species
+            recognition and size estimation developed in the E-eye system is
+            being integrated in the App to achieve automated catch reporting.
+            Traders and consumers can also use the Blockchain App to verify fish
+            provenance and quality tracking information.
           </p>
         </AboutSection>
       </div>
