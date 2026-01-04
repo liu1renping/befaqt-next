@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import SFMBox from "./SFMBox/SFMBox";
+import SFMBox from "./SFMBox";
 
 export const metadata: Metadata = {
   title: "SFM Box - IoT Tracking",

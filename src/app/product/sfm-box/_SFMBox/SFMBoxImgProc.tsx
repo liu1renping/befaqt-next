@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { ImageProcInterface } from "./SFMBoxInterface";
-import getAddressFromLatLng from "../Map/getAddressFromLatLng";
+import getAddressFromLatLng from "../_Map/getAddressFromLatLng";
 
 type props = {
   imageProc: ImageProcInterface[];
@@ -25,7 +25,10 @@ export default function SFMBoxImgProc({ imageProc }: props) {
       <h3 className="text-2xl font-bold">E-eye Records</h3>
       {imageProc.map((item, key) => {
         return (
-          <div key={key} className="bg-white/50 dark:bg-gray-800/50 p-6 rounded-lg shadow">
+          <div
+            key={key}
+            className="bg-white/50 dark:bg-gray-800/50 p-6 rounded-lg shadow"
+          >
             <ul className="list-none space-y-1 mb-4">
               <li>Operator: {item.operator}</li>
               <li>Freshness Score: {item.imgScore}</li>
@@ -49,7 +52,11 @@ export default function SFMBoxImgProc({ imageProc }: props) {
                         </ul>
                       </div>
                       <div className="relative w-full aspect-square">
-                        <a href={imgItem.image} target="_blank" rel="noopener noreferrer">
+                        <a
+                          href={imgItem.image}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           <Image
                             src={imgItem.image}
                             alt={`E-eye image ${index + 1}`}

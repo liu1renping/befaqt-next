@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 
-import MapMarkersLinked from "../Map/MapMarkersLinked";
-import MarkerInterface, { LocInterface } from "../Map/MarkerInterface";
+import MapMarkersLinked from "../_Map/MapMarkersLinked";
+import MarkerInterface, { LocInterface } from "../_Map/MarkerInterface";
 import { IoTTrackingIntrface } from "./SFMBoxInterface";
 
 type props = {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import getAddressFromLatLng from "../Map/getAddressFromLatLng";
+import getAddressFromLatLng from "../_Map/getAddressFromLatLng";
 import { E_NoseInterface } from "./SFMBoxInterface";
 
 type props = {
@@ -24,7 +24,10 @@ export default function SFMBoxEnose({ enose }: props) {
       <h3 className="text-2xl font-bold">E-nose Records</h3>
       {enose.map((item, index) => {
         return (
-          <div key={index} className="bg-white/50 dark:bg-gray-800/50 p-6 rounded-lg shadow">
+          <div
+            key={index}
+            className="bg-white/50 dark:bg-gray-800/50 p-6 rounded-lg shadow"
+          >
             <ul className="list-none space-y-1 mb-4">
               <li>Operator: {item.operator}</li>
               <li>Freshness score: {item.noseScore}</li>

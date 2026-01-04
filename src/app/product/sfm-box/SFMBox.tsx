@@ -1,14 +1,14 @@
 import Image from "next/image";
 
-import SFMBoxData from "./SFMBoxData.json";
-import SFMBoxEnose from "./SFMBoxEnose";
-import SFMBoxImgProc from "./SFMBoxImgProc";
-import SFMBoxIoT from "./SFMBoxIoT";
-import SFMBoxFisher from "./SFMBoxFisher";
-import SFMBoxProv from "./SFMBoxProv";
-import SFMBoxFresh from "./SFMBoxFresh";
-import SFMBoxTrackMap from "./SFMBoxTrackMap";
-import SFMBoxInterface from "./SFMBoxInterface";
+import SFMBoxData from "./_SFMBox/SFMBoxData.json";
+import SFMBoxEnose from "./_SFMBox/SFMBoxEnose";
+import SFMBoxImgProc from "./_SFMBox/SFMBoxImgProc";
+import SFMBoxIoT from "./_SFMBox/SFMBoxIoT";
+import SFMBoxFisher from "./_SFMBox/SFMBoxFisher";
+import SFMBoxProv from "./_SFMBox/SFMBoxProv";
+import SFMBoxFresh from "./_SFMBox/SFMBoxFresh";
+import SFMBoxTrackMap from "./_SFMBox/SFMBoxTrackMap";
+import SFMBoxInterface from "./_SFMBox/SFMBoxInterface";
 
 export default function SFMBox() {
   const boxData = SFMBoxData as SFMBoxInterface;
@@ -22,7 +22,7 @@ export default function SFMBox() {
           </h1>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid md:grid-cols-2 gap-1">
                 {boxData.fisher && <SFMBoxFisher fisher={boxData.fisher} />}
 
                 {boxData.freshness && boxData.iotResult && (

@@ -6,7 +6,7 @@ type props = {
 
 export default function SFMBoxProv({ catchProv }: props) {
   return (
-    <div className="p-4 bg-white/50 dark:bg-gray-800/50 rounded-lg shadow">
+    <div className="p-2 bg-white/50 dark:bg-gray-800/50 rounded-lg shadow">
       <h5 className="text-lg font-semibold mb-2">Catch Provenance</h5>
       {Object.keys(catchProv).length > 0 && (
         <div className="space-y-1 text-sm">
