@@ -1,4 +1,4 @@
-import { PROJECT_NAME } from "@/lib/constants";
+import { PROJECT_EMAIL, PROJECT_NAME } from "@/lib/constants";
 import Image from "next/image";
 
 const teamMembers = [
@@ -120,6 +120,15 @@ export default function TeamPage() {
         <h2 className="text-2xl font-bold text-center">Sydney Fish Market</h2>
         <p className="text-lg mb-4">
           Erik Poole and Nick Paton from the Sydney Fish Market.
+        </p>
+
+        <h2 className="text-2xl font-bold text-center">Contact Us</h2>
+        <p className="text-lg mb-4">
+          If you have any questions or would like to get in touch with the
+          BeFAQT team, please email us at{" "}
+          <a href={PROJECT_EMAIL} className="link">
+            {PROJECT_EMAIL}
+          </a>
         </p>
       </div>
     </main>

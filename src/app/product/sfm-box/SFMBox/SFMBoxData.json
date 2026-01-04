@@ -1,0 +1,322 @@
+{
+  "boxID": "0345579444",
+  "fisher": {
+    "traderID": "123456",
+    "traderName": "Peter Smith",
+    "companyName": "Forster Fishing",
+    "boat": "KY 7645 GV",
+    "address": "Manning St, Tuncurry, NSW 2428"
+  },
+  "catchProv": {
+    "time": "2020-08-02 14:57:09",
+    "boat": "KY 7645 GV",
+    "latitude": -32.821074,
+    "longitude": 152.110708,
+    "locationCodeLat": "L5",
+    "locationCodeLong": "81",
+    "method": "line",
+    "img": "/images/sfmBox_Catch.jpg",
+    "species": "Snapper",
+    "size": "33 cm",
+    "note": "line fishing",
+    "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f4f0"
+  },
+  "iotResult": {
+    "operator": "UTS-IOT-XW",
+    "iotScore": 0.33826,
+    "confidence": 1,
+    "time": "2020-08-03 05:47:38",
+    "latitude": -33.8726156,
+    "longitude": 151.1924479,
+    "iotTracking": [
+      {
+        "time": "2020-08-02 15:27:09",
+        "latitude": -32.7783244,
+        "longitude": 152.1003581,
+        "iotID": "3147",
+        "temperature": 11.6875,
+        "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f501"
+      },
+      {
+        "time": "2020-08-02 16:30:01",
+        "latitude": -32.7814738,
+        "longitude": 151.7399089,
+        "iotID": "3147",
+        "temperature": 0.604166687,
+        "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f502"
+      },
+      {
+        "time": "2020-08-02 18:38:26",
+        "latitude": -33.5069661,
+        "longitude": 151.1898112,
+        "iotID": "3147",
+        "temperature": 0.041666668,
+        "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f503"
+      },
+      {
+        "time": "2020-08-02 19:43:18",
+        "latitude": -33.8726156,
+        "longitude": 151.1924479,
+        "iotID": "3147",
+        "temperature": 0.1875,
+        "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f504"
+      },
+      {
+        "time": "2020-08-02 20:51:11",
+        "latitude": 0,
+        "longitude": 0,
+        "iotID": "3147",
+        "temperature": 0.5,
+        "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f505"
+      },
+      {
+        "time": "2020-08-02 21:58:10",
+        "latitude": 0,
+        "longitude": 0,
+        "iotID": "3147",
+        "temperature": 1.166666627,
+        "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f506"
+      },
+      {
+        "time": "2020-08-02 23:05:07",
+        "latitude": 0,
+        "longitude": 0,
+        "iotID": "3147",
+        "temperature": 2.625,
+        "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f507"
+      },
+      {
+        "time": "2020-08-03 00:12:11",
+        "latitude": 0,
+        "longitude": 0,
+        "iotID": "3147",
+        "temperature": 2.979166746,
+        "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f508"
+      },
+      {
+        "time": "2020-08-03 01:19:16",
+        "latitude": 0,
+        "longitude": 0,
+        "iotID": "3147",
+        "temperature": 3.229166746,
+        "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f509"
+      },
+      {
+        "time": "2020-08-03 02:26:20",
+        "latitude": 0,
+        "longitude": 0,
+        "iotID": "3147",
+        "temperature": 3.375,
+        "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f510"
+      },
+      {
+        "time": "2020-08-03 03:33:27",
+        "latitude": 0,
+        "longitude": 0,
+        "iotID": "3147",
+        "temperature": 3.5625,
+        "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f511"
+      },
+      {
+        "time": "2020-08-03 04:40:33",
+        "latitude": 0,
+        "longitude": 0,
+        "iotID": "3147",
+        "temperature": 4.208333492,
+        "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f512"
+      },
+      {
+        "time": "2020-08-03 05:47:38",
+        "latitude": 0,
+        "longitude": 0,
+        "iotID": "3147",
+        "temperature": 4.604166508,
+        "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f513"
+      }
+    ]
+  },
+  "imageProc": [
+    {
+      "operator": "UTS-IP-ZJ",
+      "imgScore": 0,
+      "time": "2020-08-03 05:57:40",
+      "latitude": -33.872901,
+      "longitude": 151.192333,
+      "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f4f5",
+      "overallResult": {
+        "fish": 0,
+        "confidence": 1,
+        "eye": 0,
+        "skin": 0
+      },
+      "resultPerImage": [
+        {
+          "image": "/images/sfmBox_IMG_15750.jpg",
+          "fish": 0,
+          "confidence": 1,
+          "eye": 0,
+          "skin": 0
+        },
+        {
+          "image": "/images/sfmBox_IMG_15924.jpg",
+          "fish": 0,
+          "confidence": 0.996,
+          "eye": 0,
+          "skin": 0
+        }
+      ]
+    }
+  ],
+  "e_nose": [
+    {
+      "operator": "UTS-EN-WT",
+      "noseScore": 0,
+      "confidence": 0.9,
+      "time": "2020-08-03 05:57:40",
+      "latitude": -33.872901,
+      "longitude": 151.192333,
+      "resultPerTest": [
+        {
+          "noseScore": 0,
+          "confidence": 1,
+          "sensingData": "https://oss.befaqt.com/E-nose/200806_001/test1.txt"
+        },
+        {
+          "noseScore": 1,
+          "confidence": 1,
+          "sensingData": "https://oss.befaqt.com/E-nose/200806_001/test2.txt"
+        },
+        {
+          "noseScore": 0,
+          "confidence": 0.7,
+          "sensingData": "https://oss.befaqt.com/E-nose/200806_001/test3.txt"
+        },
+        {
+          "noseScore": 0,
+          "confidence": 1,
+          "sensingData": "https://oss.befaqt.com/E-nose/200806_001/test4.txt"
+        },
+        {
+          "noseScore": 0,
+          "confidence": 1,
+          "sensingData": "https://oss.befaqt.com/E-nose/200806_001/test5.txt"
+        }
+      ],
+      "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f4f6"
+    }
+  ],
+  "freshness": [
+    {
+      "freshnessIndex": 0,
+      "time": "2020-08-02 15:27:11",
+      "conf_iot": 1,
+      "conf_img": 0,
+      "conf_enose": 0,
+      "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f514"
+    },
+    {
+      "freshnessIndex": 0.013190413,
+      "time": "2020-08-02 16:30:03",
+      "conf_iot": 1,
+      "conf_img": 0,
+      "conf_enose": 0,
+      "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f515"
+    },
+    {
+      "freshnessIndex": 0.015048361,
+      "time": "2020-08-02 18:38:28",
+      "conf_iot": 1,
+      "conf_img": 0,
+      "conf_enose": 0,
+      "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f516"
+    },
+    {
+      "freshnessIndex": 0.019271364,
+      "time": "2020-08-02 19:43:20",
+      "conf_iot": 1,
+      "conf_img": 0,
+      "conf_enose": 0,
+      "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f517"
+    },
+    {
+      "freshnessIndex": 0.031055276,
+      "time": "2020-08-02 20:51:13",
+      "conf_iot": 1,
+      "conf_img": 0,
+      "conf_enose": 0,
+      "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f518"
+    },
+    {
+      "freshnessIndex": 0.058188647,
+      "time": "2020-08-02 21:58:12",
+      "conf_iot": 1,
+      "conf_img": 0,
+      "conf_enose": 0,
+      "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f519"
+    },
+    {
+      "freshnessIndex": 0.119213365,
+      "time": "2020-08-02 23:05:09",
+      "conf_iot": 1,
+      "conf_img": 0,
+      "conf_enose": 0,
+      "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f520"
+    },
+    {
+      "freshnessIndex": 0.188587608,
+      "time": "2020-08-03 00:12:13",
+      "conf_iot": 1,
+      "conf_img": 0,
+      "conf_enose": 0,
+      "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f521"
+    },
+    {
+      "freshnessIndex": 0.263801778,
+      "time": "2020-08-03 01:19:18",
+      "conf_iot": 1,
+      "conf_img": 0,
+      "conf_enose": 0,
+      "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f522"
+    },
+    {
+      "freshnessIndex": 0.342411934,
+      "time": "2020-08-03 02:26:22",
+      "conf_iot": 1,
+      "conf_img": 0,
+      "conf_enose": 0,
+      "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f523"
+    },
+    {
+      "freshnessIndex": 0.42541571,
+      "time": "2020-08-03 03:33:29",
+      "conf_iot": 1,
+      "conf_img": 0,
+      "conf_enose": 0,
+      "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f524"
+    },
+    {
+      "freshnessIndex": 0.523461844,
+      "time": "2020-08-03 04:40:35",
+      "conf_iot": 1,
+      "conf_img": 0,
+      "conf_enose": 0,
+      "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f525"
+    },
+    {
+      "freshnessIndex": 0.630705884,
+      "time": "2020-08-03 05:47:40",
+      "conf_iot": 1,
+      "conf_img": 0,
+      "conf_enose": 0,
+      "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f526"
+    },
+    {
+      "freshnessIndex": 0.315352942,
+      "time": "2020-08-03 05:57:42",
+      "conf_iot": 0.5,
+      "conf_img": 0.3,
+      "conf_enose": 0.2,
+      "txHash": "0x3fcb939255c12b54c25383fefa3ff2227618163dcdbd5fbb482d7d4962b2f526"
+    }
+  ]
+}

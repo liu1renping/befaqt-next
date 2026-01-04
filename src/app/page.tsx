@@ -66,7 +66,7 @@ export default async function Home() {
               And Quality Tracking
             </h1>
             <Link
-              href="/product?category=🎣 SFM"
+              href="/product/sfm-box"
               className="inline-block bg-sky-500 text-white px-10 py-2 my-4 rounded-full text-xl font-bold hover:bg-sky-400 hover:scale-105 transition-all shadow-xl shadow-sky-500/20 active:scale-95 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300"
             >
               Catch of the day <br className="md:hidden" />{" "}
