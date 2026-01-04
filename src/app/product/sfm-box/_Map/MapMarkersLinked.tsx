@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import MarkerInterface, { LocInterface } from "./MarkerInterface";
+import "leaflet/dist/leaflet.css";
 
 type Props = {
   center: LocInterface;
@@ -31,10 +32,11 @@ export default function MapMarkersLinked({
 
     // Dynamically import Leaflet only on client side
     import("leaflet").then((L) => {
-      // Import Leaflet CSS
-      import("leaflet/dist/leaflet.css");
+      // Check if mapRef is still available (TypeScript narrowing)
+      if (!mapRef.current) return;
 
       // Fix Leaflet default icon issue
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       delete (L.Icon.Default.prototype as any)._getIconUrl;
       L.Icon.Default.mergeOptions({
         iconRetinaUrl:
