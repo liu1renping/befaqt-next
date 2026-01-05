@@ -1,11 +1,13 @@
 // public env vars
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://project.com";
-export const PROJECT_NAME = process.env.NEXT_PUBLIC_PROJECT_NAME ?? "Project";
-export const PROJECT_LONGNAME =
-  process.env.NEXT_PUBLIC_PROJECT_LONGNAME ?? "My Project Name";
-export const PROJECT_EMAIL =
-  process.env.NEXT_PUBLIC_PROJECT_EMAIL ?? "admin@project.com";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://company.com";
+export const COMPANY_NAME = process.env.NEXT_PUBLIC_COMPANY_NAME ?? "Company";
+export const COMPANY_LONGNAME =
+  process.env.NEXT_PUBLIC_COMPANY_LONGNAME ?? "Company Long Name";
+export const COMPANY_DESCRIPTION =
+  process.env.NEXT_PUBLIC_COMPANY_DESCRIPTION ?? "company description";
+export const COMPANY_EMAIL =
+  process.env.NEXT_PUBLIC_COMPANY_EMAIL ?? "admin@company.com";
 
 // cloudinary env vars
 export const CLOUDINARY_CLOUD_NAME =

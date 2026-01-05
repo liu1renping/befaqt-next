@@ -134,6 +134,17 @@ export default async function Home() {
             </div>
           </div>
         </section>
+
+        {/* Info Bar */}
+        <div className="text-center text-white z-10 mt-5 w-full max-w-7xl">
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-2">
+            <span>📍 University of Technology Sydney</span>
+            <span>
+              📧{" "}
+              <a href="mailto:renping.liu@uts.edu.au">renping.liu@uts.edu.au</a>
+            </span>
+          </div>
+        </div>
       </section>
     </main>
   );

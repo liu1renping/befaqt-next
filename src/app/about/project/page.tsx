@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { Metadata } from "next";
 
-import { PROJECT_NAME } from "@/lib/constants";
+import { COMPANY_NAME } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "About Project",
-  description: `About ${PROJECT_NAME}`,
+  description: `About ${COMPANY_NAME}`,
   alternates: {
     canonical: "/about/project",
   },
@@ -69,7 +69,7 @@ export default function AboutProjectPage() {
     <main className="main-page">
       {/* Hero Section */}
       <div className="max-w-4xl text-center mb-5">
-        <h1 className="page-title">About {PROJECT_NAME}</h1>
+        <h1 className="page-title">About {COMPANY_NAME}</h1>
         <p className="text-lg md:text-xl font-light max-w-2xl mx-auto italic">
           &ldquo;Blockchain enabled Fish provenance And Quality Tracking&rdquo;
         </p>

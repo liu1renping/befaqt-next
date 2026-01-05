@@ -1,4 +1,4 @@
-import { PROJECT_EMAIL, PROJECT_NAME } from "@/lib/constants";
+import { COMPANY_EMAIL, COMPANY_NAME } from "@/lib/constants";
 import Image from "next/image";
 
 const teamMembers = [
@@ -66,7 +66,7 @@ const teamMembers = [
 export default function TeamPage() {
   return (
     <main className="main-page">
-      <h1 className="page-title">{PROJECT_NAME} - Team</h1>
+      <h1 className="page-title">{COMPANY_NAME} - Team</h1>
       <div className="w-full max-w-7xl mx-auto">
         <div className="text-xl font-bold text-sky-500 text-center mb-4">
           🎉 BeFAQT team won the{" "}
@@ -126,8 +126,8 @@ export default function TeamPage() {
         <p className="text-lg mb-4">
           If you have any questions or would like to get in touch with the
           BeFAQT team, please email us at{" "}
-          <a href={PROJECT_EMAIL} className="link">
-            {PROJECT_EMAIL}
+          <a href={COMPANY_EMAIL} className="link">
+            {COMPANY_EMAIL}
           </a>
         </p>
       </div>
