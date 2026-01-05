@@ -122,6 +122,51 @@ export default function TeamPage() {
           Erik Poole and Nick Paton from the Sydney Fish Market.
         </p>
 
+        <h2 className="text-2xl font-bold text-center">List of Publications</h2>
+        <ol className="list-decimal list-inside">
+          <li>
+            Xu Wang, Guangsheng Yu, Ren Ping Liu, Jian Zhang, Qiang Wu, Steven
+            W. Su, etc, Blockchain-Enabled Fish Provenance and Quality Tracking
+            System, IEEE Internet of Things Journal, June 2022
+          </li>
+          <li>
+            Guangsheng Yu, Xuan Zha, Xu Wang, Wei Ni, Kan Yu, J. Andrew Zhang,
+            Ren Ping Liu, A Unified Analytical model for proof-of-X schemes,
+            Computers & Security,2020
+          </li>
+          <li>
+            Guangsheng Yu, Xuan Zha, Xu Wang, Wei Ni, Kan Yu, Ping Yu, J.
+            Andrew, Ren Ping Liu, Y. Jay Guo, Enabling Attribute Revocation for
+            Fine-Grained Access Control in Blockchain-IoT Systems, IEEE
+            Transactions on Engineering Management, Feb. 2020.
+          </li>
+          <li>
+            Guangsheng Yu, Xu Wang, Kan Yu, Wei Ni, J. Andrew Zhang, Ren Ping
+            Liu, Survey: Sharding in Blockchains, IEEE Access, 2020
+          </li>
+          <li>
+            Xu Wang, Ping Yu, Guangsheng Yu, Xuan Zha, Wei Ni, Ren Ping Liu, Y.
+            Jay Guo, A High-Performance Hybrid Blockchain System for Traceable
+            IoT Applications, International Conference on Network and System
+            Security, December 2019.
+          </li>
+          <li>
+            Wentian Zhang et al. A novel data pre-processing method for odour
+            detection and identification system. Sensors and Actuators A:
+            Physical, 287:113–120, 2019.
+          </li>
+          <li>
+            Taoping Liu et al. A novel multi-odour identification by electronic
+            nose using non-parametric modelling-based feature extraction and
+            time-series classification. Sensors and Actuators B: Chemical, 2019.
+          </li>
+          <li>
+            Huaxi Huang et al. Compare More Nuanced: Pairwise Alignment Bilinear
+            Network for Few-Shot Fine-Grained Learning, IEEE International
+            Conference on Multimedia and Expo, ICME 2019, pp.91-96.
+          </li>
+        </ol>
+
         <h2 className="text-2xl font-bold text-center">Contact Us</h2>
         <p className="text-lg mb-4">
           If you have any questions or would like to get in touch with the
