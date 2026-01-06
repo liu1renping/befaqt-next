@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import {
   E_NoseInterface,
   FreshnessInterface,
@@ -19,7 +22,13 @@ export default function SFMBoxFresh({
   imageProc,
   e_nose,
 }: props) {
-  const addr = getAddressFromLatLng(iotResult.latitude, iotResult.longitude);
+  const [addr, setAddr] = useState("");
+
+  useEffect(() => {
+    getAddressFromLatLng(iotResult.latitude, iotResult.longitude).then((res) =>
+      setAddr(res)
+    );
+  }, [iotResult.latitude, iotResult.longitude]);
 
   const starRating = [
     "",
