@@ -15,6 +15,12 @@ const ProductSchema = new Schema(
       required: [true, "Price is required"],
       min: [0, "Price must be greater than 0"],
     },
+    unit: {
+      type: String,
+      required: [true, "Unit is required"],
+      enum: ["kg", "box", "piece"],
+      default: "kg",
+    },
     images: {
       type: [String],
       validate: [

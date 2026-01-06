@@ -5,6 +5,7 @@ import connectDB from "@/lib/mongoose";
 import { ProductModel, ProductType } from "@/models/Product";
 import { CategoryModel, CategoryType } from "@/models/Category";
 import QuickAddToCart from "./QuickAddToCart";
+import { PRODUCT_UNIT } from "@/lib/constants";
 
 export default async function ProductsPage({
   searchParams,
@@ -119,12 +120,14 @@ export default async function ProductsPage({
                   </p>
                   <div className="flex items-center justify-between mt-auto">
                     <span className="text-lg font-black text-sky-500">
-                      ${product.price ? product.price.toFixed(2) : "0.00"}
+                      ${product.price ? product.price.toFixed(2) : "0.00"} /{" "}
+                      {product.unit}
                     </span>
                     <QuickAddToCart
                       productId={product._id.toString()}
                       name={product.name}
                       price={product.price || 0}
+                      unit={product.unit || PRODUCT_UNIT.KG}
                       image={product.images?.[0] || "/placeholder.png"}
                     />
                   </div>

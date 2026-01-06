@@ -4,6 +4,7 @@ import connectDB from "@/lib/mongoose";
 import { ProductModel, ProductType } from "@/models/Product";
 import ProductGallery from "./ProductGallery";
 import AddToCartButton from "./AddToCartButton";
+import SFMBoxPage from "../sfm-box/page";
 
 export default async function ProductDetailPage({
   params,
@@ -21,6 +22,9 @@ export default async function ProductDetailPage({
   if (!product) {
     notFound();
   }
+
+  // this is a special case for the SFM box page
+  if (product.name.startsWith("SFM")) return <SFMBoxPage />;
 
   return (
     <main className="main-page">

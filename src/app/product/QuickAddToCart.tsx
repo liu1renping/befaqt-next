@@ -7,6 +7,7 @@ interface QuickAddToCartProps {
   productId: string;
   name: string;
   price: number;
+  unit: string;
   image: string;
 }
 
@@ -14,6 +15,7 @@ export default function QuickAddToCart({
   productId,
   name,
   price,
+  unit,
   image,
 }: QuickAddToCartProps) {
   const { addToCart } = useCart();
@@ -29,6 +31,7 @@ export default function QuickAddToCart({
         productId,
         name,
         price,
+        unit,
         image,
       },
       1

@@ -8,12 +8,17 @@ import {
 } from "next-cloudinary";
 
 import { ProductType } from "@/models/Product";
-import { CLOUDINARY_UPLOAD_PRESET, MAX_IMAGE_SIZE } from "@/lib/constants";
+import {
+  CLOUDINARY_UPLOAD_PRESET,
+  MAX_IMAGE_SIZE,
+  PRODUCT_UNIT,
+} from "@/lib/constants";
 
 const emptyFormData = {
   name: "",
   description: "",
   price: "",
+  unit: "",
   images: [] as string[],
   category: "",
 };
@@ -47,6 +52,7 @@ export default function ProductForm({
         name: initialData.name || "",
         description: initialData.description || "",
         price: initialData.price?.toString() || "",
+        unit: initialData.unit || "",
         images: initialData.images || [],
         category: initialData.category?.toString() || "",
       });
@@ -166,7 +172,7 @@ export default function ProductForm({
               }
               className="input"
             >
-              <option value="">Select Category (Optional)</option>
+              <option value="">Select Category</option>
               {availableCategories.map((cat) => (
                 <option key={cat._id} value={cat._id}>
                   {cat.name}
@@ -192,6 +198,22 @@ export default function ProductForm({
               step="0.01"
             />
             <FieldError name="price" />
+          </label>
+          <label htmlFor="unit" className="label-col">
+            Unit
+            <select
+              name="unit"
+              value={formData.unit}
+              onChange={(e) =>
+                setFormData({ ...formData, unit: e.target.value })
+              }
+              className="input"
+            >
+              <option value="">Select Unit</option>
+              <option value={PRODUCT_UNIT.KG}>KG</option>
+              <option value={PRODUCT_UNIT.BOX}>Box</option>
+              <option value={PRODUCT_UNIT.PIECE}>Piece</option>
+            </select>
           </label>
         </div>
 

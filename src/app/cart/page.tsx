@@ -76,7 +76,7 @@ export default function CartPage() {
                     {item.name}
                   </Link>
                   <p className="text-lg font-bold text-sky-500 mt-1">
-                    ${item.price.toFixed(2)}
+                    ${item.price.toFixed(2)} / {item.unit}
                   </p>
                 </div>
 

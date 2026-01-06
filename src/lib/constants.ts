@@ -29,6 +29,11 @@ export enum USER_ROLE {
   BUYER = "BUYER",
   ADMIN = "ADMIN",
 }
+export enum PRODUCT_UNIT {
+  KG = "kg",
+  BOX = "box",
+  PIECE = "piece",
+}
 
 export const MAX_AVATAR_SIZE = Number(2 * 1024 * 1024); // 2MB
 export const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB per image
