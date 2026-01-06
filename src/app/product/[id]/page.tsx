@@ -76,6 +76,7 @@ export default async function ProductDetailPage({
                   productId={product._id.toString()}
                   productName={product.name}
                   productPrice={product.price}
+                  productUnit={product.unit}
                   productImage={product.images?.[0] || "/placeholder.png"}
                 />
               </div>

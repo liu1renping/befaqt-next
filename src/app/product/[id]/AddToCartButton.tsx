@@ -8,6 +8,7 @@ interface AddToCartButtonProps {
   productId: string;
   productName: string;
   productPrice: number;
+  productUnit: string;
   productImage: string;
 }
 
@@ -15,6 +16,7 @@ export default function AddToCartButton({
   productId,
   productName,
   productPrice,
+  productUnit,
   productImage,
 }: AddToCartButtonProps) {
   const [quantity, setQuantity] = useState(1);
@@ -28,6 +30,7 @@ export default function AddToCartButton({
         productId,
         name: productName,
         price: productPrice,
+        unit: productUnit,
         image: productImage,
       },
       quantity
@@ -43,6 +46,7 @@ export default function AddToCartButton({
         productId,
         name: productName,
         price: productPrice,
+        unit: productUnit,
         image: productImage,
       },
       quantity
