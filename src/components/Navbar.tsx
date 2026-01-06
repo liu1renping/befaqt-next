@@ -131,7 +131,7 @@ export default function Navbar() {
           <div className="hidden md:flex gap-4 font-semibold items-center h-full">
             <Link
               href="/"
-              className={`relative flex items-center h-full px-2 uppercase transition-colors hover:text-sky-100 ${
+              className={`relative flex items-center h-full px-2 transition-colors hover:text-sky-100 ${
                 pathname === "/"
                   ? "text-white after:absolute after:bottom-0 after:left-0 after:w-full after:h-1 after:bg-sky-300 after:content-['']"
                   : ""
@@ -150,7 +150,7 @@ export default function Navbar() {
               onMouseEnter={() => setIsAboutOpen(true)}
               onMouseLeave={() => setIsAboutOpen(false)}
             >
-              <button className="flex items-center gap-1 py-1 uppercase hover:text-sky-100 transition-colors focus:outline-none cursor-default">
+              <button className="flex items-center gap-1 py-1 hover:text-sky-100 transition-colors focus:outline-none cursor-default">
                 About
                 <svg
                   className={`w-4 h-4 transition-transform duration-200 ${isAboutOpen ? "rotate-180" : ""}`}
@@ -195,7 +195,7 @@ export default function Navbar() {
                 <Link
                   key={cat._id}
                   href={`/product?category=${encodeURIComponent(cat.name)}`}
-                  className={`relative flex items-center h-full px-2 uppercase transition-colors hover:text-white ${
+                  className={`relative flex items-center h-full px-2 transition-colors hover:text-white ${
                     pathname === "/product" && currentCategory === cat.name
                       ? "text-white after:absolute after:bottom-0 after:left-0 after:w-full after:h-1 after:bg-sky-300 after:content-['']"
                       : ""
@@ -245,7 +245,7 @@ export default function Navbar() {
                 onMouseEnter={() => setIsUserOpen(true)}
                 onMouseLeave={() => setIsUserOpen(false)}
               >
-                <button className="flex items-center gap-2 py-1 uppercase hover:text-sky-100 transition-colors focus:outline-none cursor-default">
+                <button className="flex items-center gap-2 py-1 hover:text-sky-100 transition-colors focus:outline-none cursor-default">
                   {sessionUser.avatar ? (
                     <div className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-white/20 group-hover:border-sky-400 transition-colors">
                       <Image
@@ -349,7 +349,7 @@ export default function Navbar() {
                 onMouseEnter={() => setIsSignInOpen(true)}
                 onMouseLeave={() => setIsSignInOpen(false)}
               >
-                <button className="flex items-center gap-1 py-1 uppercase hover:text-sky-100 transition-colors focus:outline-none cursor-default">
+                <button className="flex items-center gap-1 py-1 hover:text-sky-100 transition-colors focus:outline-none cursor-default">
                   Sign In
                   <svg
                     className={`w-4 h-4 transition-transform duration-200 ${isSignInOpen ? "rotate-180" : ""}`}
@@ -399,14 +399,14 @@ export default function Navbar() {
           <div className="container mx-auto px-4 py-6 space-y-6">
             <Link
               href="/"
-              className="flex items-center justify-center p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors uppercase font-semibold"
+              className="flex items-center justify-center p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors font-semibold"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Home
             </Link>
 
             <div className="space-y-4">
-              <h3 className="text-xs font-semibold text-sky-400 uppercase tracking-wider pl-2">
+              <h3 className="text-xs font-semibold text-sky-400 tracking-wider pl-2">
                 About
               </h3>
               <div className="grid grid-cols-1 gap-1">
@@ -428,7 +428,7 @@ export default function Navbar() {
             </div>
 
             <div className="space-y-4">
-              <h3 className="text-xs font-semibold text-sky-400 uppercase tracking-wider pl-2">
+              <h3 className="text-xs font-semibold text-sky-400 tracking-wider pl-2">
                 Categories
               </h3>
               <div className="grid grid-cols-1 gap-1">
