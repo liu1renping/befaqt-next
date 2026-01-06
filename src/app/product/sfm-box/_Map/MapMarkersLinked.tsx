@@ -72,10 +72,25 @@ export default function MapMarkersLinked({
 
       // Add new markers
       markers.forEach((marker, index) => {
-        const leafletMarker = L.marker([
-          marker.location.lat,
-          marker.location.lng,
-        ]).addTo(mapInstanceRef.current!).bindPopup(`
+        // Create custom icon if provided, otherwise use default
+        let customIcon: L.Icon | undefined;
+        if (marker.iconUrl) {
+          customIcon = L.icon({
+            iconUrl: marker.iconUrl,
+            iconRetinaUrl: marker.iconUrl, // Use same URL for retina if not specified
+            iconSize: marker.iconSize || [25, 41],
+            iconAnchor: marker.iconAnchor || [12, 41],
+            popupAnchor: [1, -34],
+            shadowUrl:
+              "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+            shadowSize: [41, 41],
+          });
+        }
+
+        const leafletMarker = L.marker(
+          [marker.location.lat, marker.location.lng],
+          customIcon ? { icon: customIcon } : undefined
+        ).addTo(mapInstanceRef.current!).bindPopup(`
             <div style="font-size: 14px;">
               <div style="font-weight: 600; margin-bottom: 4px;">Marker ${index + 1}</div>
               <div style="margin-bottom: 4px;">Temperature: ${marker.label}°C</div>

@@ -18,7 +18,7 @@ export default function SFMBoxTrackMap({ iotTracking }: props) {
     const markersArr: MarkerInterface[] = [];
     let latSum = 0;
     let lngSum = 0;
-    iotTracking.forEach((item) => {
+    iotTracking.forEach((item, index) => {
       const _marker: MarkerInterface = {
         location: {
           lat: item.latitude,
@@ -26,6 +26,9 @@ export default function SFMBoxTrackMap({ iotTracking }: props) {
         },
         title: `iotID: ${item.iotID}\nTemperature: ${item.temperature.toString()}`,
         label: item.temperature.toFixed(2).toString(),
+        iconUrl: index === 0 ? "/icons/favicon.ico" : "",
+        iconSize: index === 0 ? [50, 50] : [25, 41],
+        iconAnchor: index === 0 ? [25, 40] : [12, 41],
       };
 
       if (Math.abs(_marker.location.lat) > 0) {
